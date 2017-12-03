@@ -1,0 +1,44 @@
+﻿<Window x:Class="Analysis7.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Analysis7"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <StackPanel>
+        <DataGrid ItemsSource="{Binding AllEvents, Mode=TwoWay}" AutoGenerateColumns="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{Binding GroupColor}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Ризикова подія" Binding="{Binding Name}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding Description}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[0], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[1], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[2], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[3], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[4], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[5], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[6], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[7], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[8], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[9], Mode=TwoWay}"></DataGridTextColumn>
+
+                <DataGridTextColumn Header="Cередня Оцінка" Binding="{Binding AverageProbability}" IsReadOnly="True"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</Window>
