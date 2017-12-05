@@ -4,32 +4,67 @@ using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
-    public class Group:RiskEntity, IListener
+    public class Group : RiskEntity, IListener
     {
         public List<Event> RiskEvents { get; set; }
-        public List<Expert> Experts { get; set; }
-        public Group(string groupName,string description, List<Event> currentGroupRiskEvents):base(groupName, description)
+        public List<Source> RiskSources { get; set; }
+        public bool Availability { get; set; }
+
+        public Group(string groupName, string description, List<Event> currentGroupRiskEvents, List<Source> currentGroupRiskSources) : base(groupName, description)
         {
             RiskEvents = currentGroupRiskEvents;
-            foreach (var riskEvent in RiskEvents )
+            RiskSources = currentGroupRiskSources;
+            foreach (var riskEvent in RiskEvents)
             {
                 riskEvent.AttachListener(this);
             }
-            Experts=new List<Expert>();
-            for (int i = 0; i < 10; i++)
+
+            foreach (var riskSource in RiskSources)
             {
-                Experts.Add(new Expert(i, RiskEvents));
+                riskSource.AttachListener(this);
             }
-            foreach (var expert in Experts  )     {
-                expert.AttachListener(this);
-            }
+
             Update();
         }
+
+
 
         public void Update()
         {
             AverageProbability = new Probability(RiskEvents.Average(e => e.AverageProbability.Value));
+
             Notify();
+        }
+
+
+        public void IsGroupAvailable()
+        {
+            foreach (var item in RiskSources)
+            {
+                if (item.Status != 0)
+                {
+                    Availability = true;
+                    break;
+                }
+                Availability = false;
+            }
+
+            if (Availability == false)
+            {
+                Downgrade();
+                Update();
+            }
+            
+
+        }
+
+        public void Downgrade()
+        {
+            foreach(var item in RiskEvents)
+            {
+                foreach (var probability in item.ExpertProbabilities)
+                    probability.Value = 0;
+            }
         }
     }
 }

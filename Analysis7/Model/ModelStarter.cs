@@ -32,14 +32,14 @@ namespace Analysis7.Model
             Group techGroup = new Group(
                 "t",
                 "Множина настання технічних ризикових подій",
-                techEvents
+                techEvents,new List<Source>()
             );
             var costEvents = new List<Event>
             {
                 new Event("c1", "Недооцінювання витрат на реалізацію програмного проекту (надмірно низька вартість)"),
                 new Event("c2", "Переоцінювання витрат на реалізацію програмного проекту (надмірно висока вартість)")
             };
-            var costGroup=new Group("c", "Множина настання вартісних ризикових подій",costEvents);
+            var costGroup=new Group("c", "Множина настання вартісних ризикових подій",costEvents, new List<Source>());
             Events.AddRange(techEvents);
             Groups.Add(techGroup);
             Events.AddRange(costEvents);

@@ -7,7 +7,8 @@ namespace Analysis7.Model.Entities
         public string Name { get; }
         public string Description { get; }
         public Probability AverageProbability { get; set; }
-       
+
+
         protected RiskEntity(string name, string description)
         {
             Name = name;
