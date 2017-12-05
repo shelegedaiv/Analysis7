@@ -8,9 +8,13 @@ namespace Analysis7.Model.Entities
     {
         public List<Event> RiskEvents { get; set; }
         public List<Expert> Experts { get; set; }
-        public Group(string groupName,string description, List<Event> currentGroupRiskEvents):base(groupName, description)
+        public List<Source> RiskSources { get; set; }
+        public bool Availability { get; set; }
+
+        public Group(string groupName,string description, List<Event> currentGroupRiskEvents, List<Source> currentGroupRiskSources) :base(groupName, description)
         {
             RiskEvents = currentGroupRiskEvents;
+            RiskSources = currentGroupRiskSources;
             foreach (var riskEvent in RiskEvents )
             {
                 riskEvent.AttachListener(this);
@@ -23,6 +27,12 @@ namespace Analysis7.Model.Entities
             foreach (var expert in Experts  )     {
                 expert.AttachListener(this);
             }
+            foreach (var riskSource in RiskSources)
+            {
+                riskSource.AttachListener(this);
+            }
+
+
             Update();
         }
 
@@ -30,6 +40,36 @@ namespace Analysis7.Model.Entities
         {
             AverageProbability = new Probability(RiskEvents.Average(e => e.AverageProbability.Value));
             Notify();
+        }
+
+        public void IsGroupAvailable()
+        {
+            foreach (var item in RiskSources)
+            {
+                if (item.Status != 0)
+                {
+                    Availability = true;
+                    break;
+                }
+                Availability = false;
+            }
+
+            if (Availability == false)
+            {
+                Downgrade();
+                Update();
+            }
+
+
+        }
+
+        public void Downgrade()
+        {
+            foreach (var item in RiskEvents)
+            {
+                foreach (var probability in item.ExpertProbabilities)
+                    probability.Value = 0;
+            }
         }
     }
 }

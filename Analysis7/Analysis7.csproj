@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="Model\Entities\Expert.cs" />
     <Compile Include="Model\Entities\ExpertCoefficient.cs" />
+    <Compile Include="Model\Entities\Source.cs" />
     <Compile Include="Model\ModelStarter.cs" />
     <Compile Include="Model\Observer\IListener.cs" />
     <Compile Include="Model\Entities\Event.cs" />
@@ -77,6 +78,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\ConcreteViewModel\SourceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
