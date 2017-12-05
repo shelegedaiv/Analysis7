@@ -40,5 +40,38 @@
                 <DataGridTextColumn Header="Cередня Оцінка" Binding="{Binding AverageProbability}" IsReadOnly="True"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <DataGrid ItemsSource="{Binding Groups, Mode=TwoWay}" AutoGenerateColumns="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{Binding GroupColor}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Група" Binding="{Binding Name}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding Description}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Коеф 1" Binding="{Binding ExpertCoefficients[0], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 2" Binding="{Binding ExpertCoefficients[1], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 3" Binding="{Binding ExpertCoefficients[2], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 4" Binding="{Binding ExpertCoefficients[3], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 5" Binding="{Binding ExpertCoefficients[4], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 6" Binding="{Binding ExpertCoefficients[5], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 7" Binding="{Binding ExpertCoefficients[6], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 8" Binding="{Binding ExpertCoefficients[7], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 9" Binding="{Binding ExpertCoefficients[8], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 10" Binding="{Binding ExpertCoefficients[9], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Сума коеф" Binding="{Binding ExpertCoefficientsSum}" IsReadOnly="True"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </StackPanel>
 </Window>
