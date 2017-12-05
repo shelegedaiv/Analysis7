@@ -45,7 +45,7 @@ namespace Analysis7.ViewModel
             Random r=new Random();
             foreach (var group in modelStarter.Groups)
             {
-                Groups.Add(new GroupViewModel(group, Color.FromArgb(100,0, Convert.ToByte(r.Next(0,255)), 0)));
+                Groups.Add(new GroupViewModel(group, Color.FromArgb(100, Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0,255)), Convert.ToByte(r.Next(0, 255)))));
                 foreach (var riskEvent in group.RiskEvents)
                 {
                     AllEvents.Add(new EventViewModel(riskEvent, Groups.First(g => g.Name.Equals(group.Name)).GroupColor));
