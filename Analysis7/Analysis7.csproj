@@ -68,7 +68,6 @@
     <Compile Include="Model\Entities\Probability.cs" />
     <Compile Include="Model\Entities\RiskEntity.cs" />
     <Compile Include="ViewModel\AbstractViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\AbstractViewModel\IGridRow.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\EventViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\GroupViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\ProbabilityViewModel.cs" />

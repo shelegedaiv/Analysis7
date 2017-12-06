@@ -11,6 +11,16 @@ namespace Analysis7.Model
 
         public ModelStarter()
         {
+
+            var techSources = new List<Source>
+            {
+                new Source("S1",
+                    " функціональні характеристики ПЗ"),
+                new Source("S2",
+                    " характеристики якості ПЗ"),
+                new Source("S3",
+                    " характеристики надійності ПЗ")
+            };
             var techEvents = new List<Event>()
             {
                 new Event("t1",
@@ -32,20 +42,19 @@ namespace Analysis7.Model
             Group techGroup = new Group(
                 "t",
                 "Множина настання технічних ризикових подій",
-                techEvents,
-                new List<Source>()
+                techEvents, techSources
+                
             );
             var costEvents = new List<Event>
             {
                 new Event("c1", "Недооцінювання витрат на реалізацію програмного проекту (надмірно низька вартість)"),
                 new Event("c2", "Переоцінювання витрат на реалізацію програмного проекту (надмірно висока вартість)")
             };
-            var costGroup=new Group("c", "Множина настання вартісних ризикових подій",costEvents, new List<Source>());
+            var costGroup=new Group("c", "Множина настання вартісних ризикових подій",costEvents, techSources);
             Events.AddRange(techEvents);
             Groups.Add(techGroup);
             Events.AddRange(costEvents);
             Groups.Add(costGroup);
-            
         }
         //----------------------------------------------
        

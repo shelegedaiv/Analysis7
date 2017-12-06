@@ -46,7 +46,7 @@ namespace Analysis7.Model.Entities
         {
             foreach (var item in RiskSources)
             {
-                if (item.Status != 0)
+                if (item.Status)
                 {
                     Availability = true;
                     break;

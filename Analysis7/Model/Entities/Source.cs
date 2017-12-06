@@ -10,22 +10,21 @@ namespace Analysis7.Model.Entities
     public class Source : RiskEntity
     {
 
-        public int Status
+        private bool _status;
+        public bool Status
         {
-            get { return Status; }
+            get => _status;
 
             set
             {
-                if (value > 1) Status = 1;
-                else if (value < 0) Status = 0;
-                else Status = value;
+                _status = value;
                 Notify();
             }
         }
 
         public Source(string name, string description) : base(name, description)
         {
-
+            Status = true;
         }
 
 

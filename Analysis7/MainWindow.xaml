@@ -7,6 +7,31 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
     <StackPanel>
+        <DataGrid ItemsSource="{Binding AllSources, Mode=TwoWay}" AutoGenerateColumns="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{Binding GroupColor}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Джерело ризику" Binding="{Binding Name}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding Description}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
+
+
+                <DataGridTextColumn Header="Cтатус" Binding="{Binding Status}" ></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
         <DataGrid ItemsSource="{Binding AllEvents, Mode=TwoWay}" AutoGenerateColumns="False">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">

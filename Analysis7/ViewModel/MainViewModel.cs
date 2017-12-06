@@ -37,11 +37,23 @@ namespace Analysis7.ViewModel
                 OnPropertyChanged(nameof(AllEvents));
             }
         }
-        
+
+        private ObservableCollection<SourceViewModel> _allSources;
+
+        public ObservableCollection<SourceViewModel> AllSources
+        {
+            get => _allSources;
+            set
+            {
+                _allSources = value;
+                OnPropertyChanged(nameof(AllSources));
+            }
+        }
         public MainViewModel(ModelStarter modelStarter)
         {
             Groups=new ObservableCollection<GroupViewModel>();
             AllEvents=new ObservableCollection<EventViewModel>();
+            AllSources=new ObservableCollection<SourceViewModel>();
             Random r=new Random();
             foreach (var group in modelStarter.Groups)
             {
@@ -49,6 +61,10 @@ namespace Analysis7.ViewModel
                 foreach (var riskEvent in group.RiskEvents)
                 {
                     AllEvents.Add(new EventViewModel(riskEvent, Groups.First(g => g.Name.Equals(group.Name)).GroupColor));
+                }
+                foreach (var source in group.RiskSources)
+                {
+                    AllSources.Add(new SourceViewModel(source, Groups.First(g => g.Name.Equals(group.Name)).GroupColor));
                 }
             }
         }

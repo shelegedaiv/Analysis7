@@ -12,17 +12,16 @@ namespace Analysis7.ViewModel.ConcreteViewModel
 {
     public class SourceViewModel: RiskEntityViewModel, IListener
     {
-        private int _status;
-        public int Status
+        private bool _status;
+        public bool Status
         {
             get => _status;
 
             set
             {
-                if (value > 1) _status = 1;
-                else if (value < 0) _status = 0;
-                else _status = value;
+                _status = value;
                 OnPropertyChanged(nameof(_status));
+                _modelSource.Status = Status;
             }
         }
 
@@ -39,7 +38,8 @@ namespace Analysis7.ViewModel.ConcreteViewModel
 
         public void Update()
         {
-            throw new NotImplementedException();
+            _status = _modelSource.Status;
+            OnPropertyChanged(nameof(Status));
         }
     }
 }
