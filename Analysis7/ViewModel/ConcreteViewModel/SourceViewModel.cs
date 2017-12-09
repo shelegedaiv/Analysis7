@@ -21,7 +21,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             {
                 _status = value;
                 OnPropertyChanged(nameof(_status));
-                _modelSource.Status = true;
+                _modelSource.Status = value;
             }
         }
 
