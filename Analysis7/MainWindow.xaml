@@ -26,10 +26,8 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-
-
-                <DataGridCheckBoxColumn Header="Статус"  Binding="{Binding Status, Mode=TwoWay}" />
-               
+                <DataGridCheckBoxColumn Header="Статус"  Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+               </DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -64,6 +62,19 @@
                 <DataGridTextColumn Header="Оцінка" Binding="{Binding ExpertProbabilities[9], Mode=TwoWay}"></DataGridTextColumn>
 
                 <DataGridTextColumn Header="Cередня Оцінка" Binding="{Binding AverageProbability}" IsReadOnly="True"></DataGridTextColumn>
+
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[0]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[1]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[2]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[3]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[4]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[5]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[6]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[7]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[8]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="Оцінка коеф" Binding="{Binding CoefExpertProbabilities[9]}" IsReadOnly="True"></DataGridTextColumn>
+
+                <DataGridTextColumn Header="Cередня оцінка коеф" Binding="{Binding CoefAverageProbability}" IsReadOnly="True"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -86,16 +97,16 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Коеф 1" Binding="{Binding ExpertCoefficients[0], Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Коеф 2" Binding="{Binding ExpertCoefficients[1], Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Коеф 3" Binding="{Binding ExpertCoefficients[2], Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Коеф 4" Binding="{Binding ExpertCoefficients[3], Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Коеф 5" Binding="{Binding ExpertCoefficients[4], Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Коеф 6" Binding="{Binding ExpertCoefficients[5], Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Коеф 7" Binding="{Binding ExpertCoefficients[6], Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Коеф 8" Binding="{Binding ExpertCoefficients[7], Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Коеф 9" Binding="{Binding ExpertCoefficients[8], Mode=TwoWay}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Коеф 10" Binding="{Binding ExpertCoefficients[9], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 1" Binding="{Binding ExpertCoefficients[0], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 2" Binding="{Binding ExpertCoefficients[1], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 3" Binding="{Binding ExpertCoefficients[2], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 4" Binding="{Binding ExpertCoefficients[3], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 5" Binding="{Binding ExpertCoefficients[4], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 6" Binding="{Binding ExpertCoefficients[5], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 7" Binding="{Binding ExpertCoefficients[6], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 8" Binding="{Binding ExpertCoefficients[7], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 9" Binding="{Binding ExpertCoefficients[8], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Коеф 10" Binding="{Binding ExpertCoefficients[9], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Сума коеф" Binding="{Binding ExpertCoefficientsSum}" IsReadOnly="True"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
