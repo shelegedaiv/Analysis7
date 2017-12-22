@@ -8,7 +8,7 @@ namespace Analysis7.Model.Entities
     {
         private readonly List<Event> _bindedEvents;
         public int Number { get; set; }
-        public Probability AverageProbability { get; set; }
+        public double AverageCoefProbability { get; set; }
         private readonly ExpertCoefficient _coefficient;
         public int Coefficient
         {
@@ -36,7 +36,7 @@ namespace Analysis7.Model.Entities
 
         public void Update()
         {
-            AverageProbability = new Probability(_bindedEvents.Average(ev => ev.ExpertProbabilities[Number].Value));
+            AverageCoefProbability = _bindedEvents.Average(ev => ev.CoefExpertProbabilities[Number]);
         }
     }
 }

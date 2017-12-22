@@ -60,8 +60,8 @@ namespace Analysis7.Model.Entities
             {
                 CoefExpertProbabilities[i] = ExpertProbabilities[i].Value * _expertCoefs[i];
             }
-            AverageProbability = new Probability(ExpertProbabilities.Average(e => e.Value)); //ExpertProbabilities.Count == 0 ? new Probability(0) : new Probability(ExpertProbabilities.Average(e => e.Value));
-            CoefAverageProbability = CoefExpertProbabilities.Average(); //CoefExpertProbabilities.Count == 0 ? 0 : CoefExpertProbabilities.Average();
+            AverageProbability = new Probability(ExpertProbabilities.Average(e => e.Value)); 
+            CoefAverageProbability = CoefExpertProbabilities.Sum()/_expertCoefs.Sum();
             Notify();
         }
         //todo delete

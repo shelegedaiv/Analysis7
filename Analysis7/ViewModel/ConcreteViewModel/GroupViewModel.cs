@@ -11,18 +11,9 @@ namespace Analysis7.ViewModel.ConcreteViewModel
     {
         private readonly Group _modelGroup;
         private ObservableCollection<int> _expertCoefficients;
-        private ObservableCollection<int> _averageExpertCoefficients;
         public Color GroupColor { get; }
         private int _expertCoefficientsSum;
-        private ObservableCollection<int> AverageExpertCoefficients
-        {
-            get => _averageExpertCoefficients;
-            set
-            {
-                _averageExpertCoefficients = value;
-                OnPropertyChanged(nameof(AverageExpertCoefficients));
-            }
-        }
+       
         public ObservableCollection<int> ExpertCoefficients
         {
             get => _expertCoefficients;
@@ -37,20 +28,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 };
             }
         }
-
-
-        public GroupViewModel(Group modelGroup, Color color):base(modelGroup.Name,modelGroup.Description, modelGroup.AverageProbability.Value)
-        {
-            GroupColor = color;
-            _modelGroup = modelGroup;
-            _modelGroup.AttachListener(this);
-            Update();
-        }
-       
-
-        
-
-       
         public int ExpertCoefficientsSum
         {
             get => _expertCoefficientsSum;
@@ -60,12 +37,47 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 OnPropertyChanged(nameof(ExpertCoefficientsSum));
             }
         }
+
+        private ObservableCollection<double> _expertAverageProbabilities;
+
+        public ObservableCollection<double> ExpertAverageProbabilities
+        {
+            get => _expertAverageProbabilities;
+            set
+            {
+                _expertAverageProbabilities = value;
+                OnPropertyChanged(nameof(ExpertAverageProbabilities));
+            }
+        }
+
+        private double _averageCoefProbability;
+
+        public double AverageCoefProbability
+        {
+            get => _averageCoefProbability;
+            set
+            {
+                _averageCoefProbability = value;
+                OnPropertyChanged(nameof(AverageCoefProbability));
+            }
+        }
+        public GroupViewModel(Group modelGroup, Color color):base(modelGroup.Name,modelGroup.Description, modelGroup.AverageProbability.Value)
+        {
+            GroupColor = color;
+            _modelGroup = modelGroup;
+            _modelGroup.AttachListener(this);
+            Update();
+        }
+        
         public void Update()
         {
             AverageProbability = _modelGroup.AverageProbability.Value;
             ExpertCoefficients =
                 new ObservableCollection<int>(_modelGroup.Experts.Select(exp => exp.Coefficient).ToList());
             ExpertCoefficientsSum = ExpertCoefficients.Sum(exp => exp);
+            _modelGroup.Experts.ForEach(ex=>ex.Update());
+            ExpertAverageProbabilities=new ObservableCollection<double>(_modelGroup.Experts.Select(ex=>ex.AverageCoefProbability).ToList());
+            AverageCoefProbability = ExpertAverageProbabilities.Sum()/ExpertCoefficientsSum;
         }
 
 
