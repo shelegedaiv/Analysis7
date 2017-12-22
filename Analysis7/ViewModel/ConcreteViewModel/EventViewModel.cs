@@ -17,10 +17,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             set
             {
                 _expertProbabilities = value;
-                _expertProbabilities.CollectionChanged += (source, e) =>
-                {
-                    _modelEvent.ExpertProbabilities[e.NewStartingIndex].Value = ExpertProbabilities[e.NewStartingIndex];
-                };
+               
                 OnPropertyChanged(nameof(ExpertProbabilities));
             }
         }
@@ -32,10 +29,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             set
             {
                 _coefExpertProbabilities = value;
-                _coefExpertProbabilities.CollectionChanged += (source, e) =>
-                {
-                    _modelEvent.CoefExpertProbabilities[e.NewStartingIndex] = CoefExpertProbabilities[e.NewStartingIndex];
-                };
+               
                 OnPropertyChanged(nameof(CoefExpertProbabilities));
             }
         }
@@ -52,7 +46,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             }
         }
         public Color GroupColor { get; set; }
-        private readonly Event _modelEvent;
+        protected readonly Event _modelEvent;
      
         public EventViewModel(Event modelEvent, Color color):base(modelEvent.Name, modelEvent.Description, modelEvent.AverageProbability.Value)
         {
@@ -60,14 +54,27 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             GroupColor = color;
             _modelEvent.AttachListener(this);
             Update();
+            
         }
-        
-        public void Update()
+
+        protected virtual void setLinkWithModel()
+        {
+            _expertProbabilities.CollectionChanged += (source, e) =>
+            {
+                _modelEvent.ExpertProbabilities[e.NewStartingIndex].Value = ExpertProbabilities[e.NewStartingIndex];
+            };
+            //_coefExpertProbabilities.CollectionChanged += (source, e) =>
+            //{
+            //    _modelEvent.CoefExpertProbabilities[e.NewStartingIndex] = CoefExpertProbabilities[e.NewStartingIndex];
+            //};
+        }
+        public virtual void Update()
         {
             ExpertProbabilities=new ObservableCollection<double>(_modelEvent.ExpertProbabilities.Select(ev=>ev.Value).ToList());
             CoefExpertProbabilities=new ObservableCollection<double>(_modelEvent.CoefExpertProbabilities.Select(ev => ev).ToList());
             AverageProbability = _modelEvent.AverageProbability.Value;
             CoefAverageProbability = _modelEvent.CoefAverageProbability;
+            setLinkWithModel();
         }
     }
 }

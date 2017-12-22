@@ -1,33 +1,50 @@
-﻿    using System.Collections.Generic;
-using System.Dynamic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
-    public class Event:RiskEntity, IListener
+    public class Price_Entity : Subject, IListener
     {
         #region variables
-        //todo delete
-        // private List<IListener> _groupExperts;
+       
+        
         private List<double> _expertCoefs;
         public List<Probability> ExpertProbabilities { get; set; }
-        public List<double> CoefExpertProbabilities { get;}
+        public List<double> CoefExpertProbabilities { get; }
         public double CoefAverageProbability { get; private set; }
         //Andrii
-        public Price_Entity PriceEntity { get; set; }
+        public Probability AverageProbability { get; set; }
 
-        #endregion
-        #region constructors
-        public Event(string eventName, string description) : this(eventName, description, new List<double>())
+        private int _price;
+        public int Price
         {
+            get => _price;
+
+            set
+            {
+                _price = (value < 0) ? 0 : value;
+               // Notify();
+            }
 
         }
 
-        public Event(string eventName, string description, List<double> expertProbabilities):base(eventName, description)
+
+        #endregion
+        #region constructors
+        //public Price_Entity(string eventName, string description) : this(eventName, description, new List<double>())
+        //{
+
+        //}
+
+        public Price_Entity( List<double> expertProbabilities)//:base(eventName, description)
         {
+            AverageProbability = new Probability(0);
             ExpertProbabilities = new List<Probability>();
-            _expertCoefs=new List<double>();
+            _expertCoefs = new List<double>();
             CoefExpertProbabilities = new List<double>();
             for (int i = 0; i < 10; i++)//set 10 probabilities for experts (default values) and coef probabilities = simple probabilities
             {
@@ -35,21 +52,21 @@ namespace Analysis7.Model.Entities
                 {
                     ExpertProbabilities.Add(new Probability(expertProbabilities[i]));
                     CoefExpertProbabilities.Add(expertProbabilities[i]);
-                    
+
                 }
                 else
                 {
-                    ExpertProbabilities.Add(new Probability(i/10.0));
-                    CoefExpertProbabilities.Add(i / 10.0);
+                    ExpertProbabilities.Add(new Probability(1-i / 10.0));
+                    CoefExpertProbabilities.Add(1-i / 10.0);
                 }
 
                 _expertCoefs.Add(1);
                 ExpertProbabilities[i].AttachListener(this);
             }
-            PriceEntity = new Price_Entity(new List<double>());
+
             Update();
         }
-#endregion
+        #endregion
         public void UpdateCoefficient(int number, double expertCoef)
         {
             _expertCoefs[number] = expertCoef;
@@ -62,22 +79,10 @@ namespace Analysis7.Model.Entities
             {
                 CoefExpertProbabilities[i] = ExpertProbabilities[i].Value * _expertCoefs[i];
             }
-            AverageProbability = new Probability(ExpertProbabilities.Average(e => e.Value)); 
-            CoefAverageProbability = CoefExpertProbabilities.Sum()/_expertCoefs.Sum();
+            AverageProbability = new Probability(ExpertProbabilities.Average(e => e.Value));
+            CoefAverageProbability = CoefExpertProbabilities.Sum() / _expertCoefs.Sum();
             Notify();
         }
-        //todo delete
-        //public void AttachExpert(IListener expert)
-        //{
-        //    if (_groupExperts is null) _groupExperts=new List<IListener>();
-        //    _groupExperts.Add(expert);
-        //}
 
-        //public void NotifyExpert()
-        //{
-        //    foreach (var expert in _groupExperts)     {
-        //        expert.Update();
-        //    }
-        //}
     }
 }

@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="Model\Entities\Expert.cs" />
     <Compile Include="Model\Entities\ExpertCoefficient.cs" />
+    <Compile Include="Model\Entities\Price_Entity.cs" />
     <Compile Include="Model\Entities\Source.cs" />
     <Compile Include="Model\ModelStarter.cs" />
     <Compile Include="Model\Observer\IListener.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="ViewModel\AbstractViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\EventViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\GroupViewModel.cs" />
+    <Compile Include="ViewModel\ConcreteViewModel\Price_EntityViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\ProbabilityViewModel.cs" />
     <Compile Include="ViewModel\AbstractViewModel\RiskEntityViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

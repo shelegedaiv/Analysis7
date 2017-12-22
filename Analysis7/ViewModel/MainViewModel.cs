@@ -37,6 +37,17 @@ namespace Analysis7.ViewModel
                 OnPropertyChanged(nameof(AllEvents));
             }
         }
+        private ObservableCollection<Price_EntityViewModel> _allPriceEvents;
+
+        public ObservableCollection<Price_EntityViewModel> AllPriceEvents
+        {
+            get => _allPriceEvents;
+            set
+            {
+                _allPriceEvents = value;
+                OnPropertyChanged(nameof(AllPriceEvents));
+            }
+        }
 
         private ObservableCollection<SourceViewModel> _allSources;
 
@@ -53,7 +64,8 @@ namespace Analysis7.ViewModel
         {
             Groups=new ObservableCollection<GroupViewModel>();
             AllEvents=new ObservableCollection<EventViewModel>();
-            AllSources=new ObservableCollection<SourceViewModel>();
+            AllPriceEvents = new ObservableCollection<Price_EntityViewModel>();
+            AllSources =new ObservableCollection<SourceViewModel>();
             Random r=new Random();
             foreach (var group in modelStarter.Groups)
             {
@@ -61,6 +73,8 @@ namespace Analysis7.ViewModel
                 foreach (var riskEvent in group.RiskEvents)
                 {
                     AllEvents.Add(new EventViewModel(riskEvent, Groups.First(g => g.Name.Equals(group.Name)).GroupColor));
+                    AllPriceEvents.Add(new Price_EntityViewModel(riskEvent, Groups.First(g => g.Name.Equals(group.Name)).GroupColor));
+
                 }
                 foreach (var source in group.RiskSources)
                 {

@@ -80,6 +80,56 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <DataGrid ItemsSource="{Binding AllPriceEvents, Mode=TwoWay}" 
+                  AutoGenerateColumns="False"
+                  MinColumnWidth="40">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{Binding GroupColor}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Ризикова подія" Binding="{Binding Name}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="ToolTip" Value="{Binding Description}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="1" Binding="{Binding ExpertProbabilities[0], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="2" Binding="{Binding ExpertProbabilities[1], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="3" Binding="{Binding ExpertProbabilities[2], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="4" Binding="{Binding ExpertProbabilities[3], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="5" Binding="{Binding ExpertProbabilities[4], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="6" Binding="{Binding ExpertProbabilities[5], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="7" Binding="{Binding ExpertProbabilities[6], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="8" Binding="{Binding ExpertProbabilities[7], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="9" Binding="{Binding ExpertProbabilities[8], Mode=TwoWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="10" Binding="{Binding ExpertProbabilities[9], Mode=TwoWay}"></DataGridTextColumn>
+
+                <DataGridTextColumn Header="Cер." Binding="{Binding AverageProbability}" IsReadOnly="True"></DataGridTextColumn>
+
+                <DataGridTextColumn Header="1*" Binding="{Binding CoefExpertProbabilities[0]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="2*" Binding="{Binding CoefExpertProbabilities[1]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="3*" Binding="{Binding CoefExpertProbabilities[2]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="4*" Binding="{Binding CoefExpertProbabilities[3]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="5*" Binding="{Binding CoefExpertProbabilities[4]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="6*" Binding="{Binding CoefExpertProbabilities[5]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="7*" Binding="{Binding CoefExpertProbabilities[6]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="8*" Binding="{Binding CoefExpertProbabilities[7]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="9*" Binding="{Binding CoefExpertProbabilities[8]}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Header="10*" Binding="{Binding CoefExpertProbabilities[9]}" IsReadOnly="True"></DataGridTextColumn>
+
+                <DataGridTextColumn Header="Cер.*" Binding="{Binding CoefAverageProbability}" IsReadOnly="True"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
         <DataGrid ItemsSource="{Binding Groups, Mode=TwoWay}" AutoGenerateColumns="False">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
