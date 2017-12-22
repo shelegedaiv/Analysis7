@@ -51,7 +51,8 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-                
+                <DataGridCheckBoxColumn Header="Статус"  Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
                 <DataGridTextColumn Header="1" Binding="{Binding ExpertProbabilities[0], Mode=TwoWay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="2" Binding="{Binding ExpertProbabilities[1], Mode=TwoWay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="3" Binding="{Binding ExpertProbabilities[2], Mode=TwoWay}"></DataGridTextColumn>

@@ -7,17 +7,8 @@ namespace Analysis7.Model.Entities
         public string Name { get; }
         public string Description { get; }
         public Probability AverageProbability { get; set; }
-        private bool _status;
-        public bool Status
-        {
-            get => _status;
-
-            set
-            {
-                _status = value;
-                Notify();
-            }
-        }
+        public bool Status { get; set; }
+       
         protected RiskEntity(string name, string description, bool status=true)
         {
             Name = name;

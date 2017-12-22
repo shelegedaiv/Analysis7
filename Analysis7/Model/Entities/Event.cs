@@ -8,9 +8,7 @@ namespace Analysis7.Model.Entities
     public class Event:RiskEntity, IListener
     {
         #region variables
-        //todo delete
-        // private List<IListener> _groupExperts;
-        private List<double> _expertCoefs;
+        private readonly List<double> _expertCoefs;
         public List<Probability> ExpertProbabilities { get; set; }
         public List<double> CoefExpertProbabilities { get;}
         public double CoefAverageProbability { get; private set; }
@@ -60,22 +58,23 @@ namespace Analysis7.Model.Entities
             {
                 CoefExpertProbabilities[i] = ExpertProbabilities[i].Value * _expertCoefs[i];
             }
-            AverageProbability = new Probability(ExpertProbabilities.Average(e => e.Value)); 
-            CoefAverageProbability = CoefExpertProbabilities.Sum()/_expertCoefs.Sum();
+            AverageProbability = new Probability(ExpertProbabilities.Average(e => e.Value));
+            var coefSum = _expertCoefs.Sum();
+            if (coefSum.Equals(0))
+                CoefAverageProbability = 0;
+            else
+                CoefAverageProbability = CoefExpertProbabilities.Sum()/_expertCoefs.Sum();
             Notify();
         }
-        //todo delete
-        //public void AttachExpert(IListener expert)
-        //{
-        //    if (_groupExperts is null) _groupExperts=new List<IListener>();
-        //    _groupExperts.Add(expert);
-        //}
 
-        //public void NotifyExpert()
-        //{
-        //    foreach (var expert in _groupExperts)     {
-        //        expert.Update();
-        //    }
-        //}
+        public void Downgrade()
+        {
+            Status = false;
+            foreach (var probability in ExpertProbabilities)
+            {
+                probability.Value = 0;
+            }
+            Update();
+        }
     }
 }
