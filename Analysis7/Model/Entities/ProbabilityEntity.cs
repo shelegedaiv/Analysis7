@@ -7,40 +7,15 @@ using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
-    public class Price_Entity : Subject, IListener
+    public class ProbabilityEntity:Subject, IListener, IAverageProbability
     {
-        #region variables
-       
-        
-        private List<double> _expertCoefs;
         public List<Probability> ExpertProbabilities { get; set; }
         public List<double> CoefExpertProbabilities { get; }
         public double CoefAverageProbability { get; private set; }
-        //Andrii
-        public Probability AverageProbability { get; set; }
+        protected List<double> _expertCoefs;
+        public Probability AverageProbability { get; private set; }
 
-        private int _price;
-        public int Price
-        {
-            get => _price;
-
-            set
-            {
-                _price = (value < 0) ? 0 : value;
-               // Notify();
-            }
-
-        }
-
-
-        #endregion
-        #region constructors
-        //public Price_Entity(string eventName, string description) : this(eventName, description, new List<double>())
-        //{
-
-        //}
-
-        public Price_Entity( List<double> expertProbabilities)//:base(eventName, description)
+        public ProbabilityEntity(List<double> expertProbabilities)
         {
             AverageProbability = new Probability(0);
             ExpertProbabilities = new List<Probability>();
@@ -52,28 +27,21 @@ namespace Analysis7.Model.Entities
                 {
                     ExpertProbabilities.Add(new Probability(expertProbabilities[i]));
                     CoefExpertProbabilities.Add(expertProbabilities[i]);
-
                 }
                 else
                 {
-                    ExpertProbabilities.Add(new Probability(1-i / 10.0));
-                    CoefExpertProbabilities.Add(1-i / 10.0);
+                    ExpertProbabilities.Add(new Probability(i / 10.0));
+                    CoefExpertProbabilities.Add(i / 10.0);
                 }
 
                 _expertCoefs.Add(1);
                 ExpertProbabilities[i].AttachListener(this);
             }
-
-            Update();
-        }
-        #endregion
-        public void UpdateCoefficient(int number, double expertCoef)
-        {
-            _expertCoefs[number] = expertCoef;
+            
             Update();
         }
 
-        public void Update()
+        public virtual void Update()
         {
             for (int i = 0; i < CoefExpertProbabilities.Count; i++)
             {
@@ -84,5 +52,11 @@ namespace Analysis7.Model.Entities
             Notify();
         }
 
+
+        public void UpdateCoefficient(int number, double expertCoef)
+        {
+            _expertCoefs[number] = expertCoef;
+            Update();
+        }
     }
 }

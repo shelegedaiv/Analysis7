@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
 using Analysis7.Model.Entities;
@@ -7,13 +8,15 @@ using Analysis7.ViewModel.AbstractViewModel;
 
 namespace Analysis7.ViewModel.ConcreteViewModel
 {
-    public class GroupViewModel:RiskEntityViewModel, IListener
+    public class ProbabilityGroupViewModel:RiskEntityViewModel, IListener
     {
         private readonly Group _modelGroup;
         private ObservableCollection<int> _expertCoefficients;
         public Color GroupColor { get; }
         private int _expertCoefficientsSum;
-       
+
+        
+
         public ObservableCollection<int> ExpertCoefficients
         {
             get => _expertCoefficients;
@@ -23,7 +26,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 OnPropertyChanged(nameof(ExpertCoefficients));
                 _expertCoefficients.CollectionChanged += (source, e) =>
                 {
-                    _modelGroup.Experts[e.NewStartingIndex].Coefficient = _expertCoefficients[e.NewStartingIndex];
+                    _modelGroup.ProbabilityExperts[e.NewStartingIndex].Coefficient = _expertCoefficients[e.NewStartingIndex];
                     Update();
                 };
             }
@@ -61,7 +64,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 OnPropertyChanged(nameof(AverageCoefProbability));
             }
         }
-        public GroupViewModel(Group modelGroup, Color color):base(modelGroup.Name,modelGroup.Description, modelGroup.AverageProbability.Value)
+        public ProbabilityGroupViewModel(Group modelGroup, Color color):base(modelGroup.Name,modelGroup.Description, modelGroup.AverageProbability.Value)
         {
             GroupColor = color;
             _modelGroup = modelGroup;
@@ -73,10 +76,10 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         {
             AverageProbability = _modelGroup.AverageProbability.Value;
             ExpertCoefficients =
-                new ObservableCollection<int>(_modelGroup.Experts.Select(exp => exp.Coefficient).ToList());
+                new ObservableCollection<int>(_modelGroup.ProbabilityExperts.Select(exp => exp.Coefficient).ToList());
             ExpertCoefficientsSum = ExpertCoefficients.Sum(exp => exp);
-            _modelGroup.Experts.ForEach(ex=>ex.Update());
-            ExpertAverageProbabilities=new ObservableCollection<double>(_modelGroup.Experts.Select(ex=>ex.AverageCoefProbability).ToList());
+            _modelGroup.ProbabilityExperts.ForEach(ex=>ex.Update());
+            ExpertAverageProbabilities=new ObservableCollection<double>(_modelGroup.ProbabilityExperts.Select(ex=>ex.AverageCoefProbability).ToList());
             AverageCoefProbability = ExpertAverageProbabilities.Sum()/ExpertCoefficientsSum;
         }
 

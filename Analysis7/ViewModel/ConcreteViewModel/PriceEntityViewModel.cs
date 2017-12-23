@@ -1,15 +1,31 @@
-﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Media;
-using Analysis7.Model.Entities;
+using System.Text;
+using System.Threading.Tasks;
 using Analysis7.Model.Observer;
 using Analysis7.ViewModel.AbstractViewModel;
+using System.Collections.ObjectModel;
+using System.Windows.Media;
+using Analysis7.Model.Entities;
 
 namespace Analysis7.ViewModel.ConcreteViewModel
 {
-    public class EventViewModel : RiskEntityViewModel, IListener
+    public class PriceEntityViewModel: RiskEntityViewModel, IListener
+
     {
+
+        private int _price;
+        public int Price
+        {
+            get => _price;
+            set
+            {
+                _price = value;
+                OnPropertyChanged(nameof(Price));
+            }
+        }
+         
         private ObservableCollection<double> _expertProbabilities;
         public ObservableCollection<double> ExpertProbabilities
         {
@@ -19,7 +35,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 _expertProbabilities = value;
                 _expertProbabilities.CollectionChanged += (source, e) =>
                 {
-                    _modelEvent.Probability.ExpertProbabilities[e.NewStartingIndex].Value = ExpertProbabilities[e.NewStartingIndex];
+                    _modelEvent.Price.ExpertProbabilities[e.NewStartingIndex].Value = ExpertProbabilities[e.NewStartingIndex];
                 };
                 OnPropertyChanged(nameof(ExpertProbabilities));
             }
@@ -34,7 +50,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 _coefExpertProbabilities = value;
                 _coefExpertProbabilities.CollectionChanged += (source, e) =>
                 {
-                    _modelEvent.Probability.CoefExpertProbabilities[e.NewStartingIndex] = CoefExpertProbabilities[e.NewStartingIndex];
+                    _modelEvent.Price.CoefExpertProbabilities[e.NewStartingIndex] = CoefExpertProbabilities[e.NewStartingIndex];
                 };
                 OnPropertyChanged(nameof(CoefExpertProbabilities));
             }
@@ -54,20 +70,20 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         public Color GroupColor { get; set; }
         private readonly Event _modelEvent;
 
-        public EventViewModel(Event modelEvent, Color color) : base(modelEvent.Name, modelEvent.Description, modelEvent.Probability.AverageProbability.Value)
+        public PriceEntityViewModel(Event modelEvent, Color color) : base(modelEvent.Name, modelEvent.Description, modelEvent.Probability.AverageProbability.Value)
         {
             _modelEvent = modelEvent;
             GroupColor = color;
-            _modelEvent.Probability.AttachListener(this);
+            _modelEvent.Price.AttachListener(this);
             Update();
         }
 
         public void Update()
         {
-            ExpertProbabilities = new ObservableCollection<double>(_modelEvent.Probability.ExpertProbabilities.Select(ev => ev.Value).ToList());
-            CoefExpertProbabilities = new ObservableCollection<double>(_modelEvent.Probability.CoefExpertProbabilities.Select(ev => ev).ToList());
-            AverageProbability = _modelEvent.Probability.AverageProbability.Value;
-            CoefAverageProbability = _modelEvent.Probability.CoefAverageProbability;
+            ExpertProbabilities = new ObservableCollection<double>(_modelEvent.Price.ExpertProbabilities.Select(ev => ev.Value).ToList());
+            CoefExpertProbabilities = new ObservableCollection<double>(_modelEvent.Price.CoefExpertProbabilities.Select(ev => ev).ToList());
+            AverageProbability = _modelEvent.Price.AverageProbability.Value;
+            CoefAverageProbability = _modelEvent.Price.CoefAverageProbability;
         }
     }
 }

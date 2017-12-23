@@ -13,19 +13,30 @@ namespace Analysis7.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        private ObservableCollection<GroupViewModel> _groups;
+        private ObservableCollection<ProbabilityGroupViewModel> _probabilityGroups;
 
-        public ObservableCollection<GroupViewModel> Groups
+        public ObservableCollection<ProbabilityGroupViewModel> ProbabilityGroups
         {
-            get => _groups;
+            get => _probabilityGroups;
             set
             {
-                _groups = value;
-                OnPropertyChanged(nameof(Groups));
+                _probabilityGroups = value;
+                OnPropertyChanged(nameof(ProbabilityGroups));
             }
             
         }
+        private ObservableCollection<PriceGroupViewModel> _priceGroups;
 
+        public ObservableCollection<PriceGroupViewModel> PriceGroups
+        {
+            get => _priceGroups;
+            set
+            {
+                _priceGroups = value;
+                OnPropertyChanged(nameof(PriceGroups));
+            }
+
+        }
         private ObservableCollection<EventViewModel> _allEvents;
 
         public ObservableCollection<EventViewModel> AllEvents
@@ -37,9 +48,9 @@ namespace Analysis7.ViewModel
                 OnPropertyChanged(nameof(AllEvents));
             }
         }
-        private ObservableCollection<Price_EntityViewModel> _allPriceEvents;
+        private ObservableCollection<PriceEntityViewModel> _allPriceEvents;
 
-        public ObservableCollection<Price_EntityViewModel> AllPriceEvents
+        public ObservableCollection<PriceEntityViewModel> AllPriceEvents
         {
             get => _allPriceEvents;
             set
@@ -62,23 +73,25 @@ namespace Analysis7.ViewModel
         }
         public MainViewModel(ModelStarter modelStarter)
         {
-            Groups=new ObservableCollection<GroupViewModel>();
-            AllEvents=new ObservableCollection<EventViewModel>();
-            AllPriceEvents = new ObservableCollection<Price_EntityViewModel>();
+            ProbabilityGroups=new ObservableCollection<ProbabilityGroupViewModel>();
+            PriceGroups = new ObservableCollection<PriceGroupViewModel>();
+            AllEvents =new ObservableCollection<EventViewModel>();
+            AllPriceEvents = new ObservableCollection<PriceEntityViewModel>();
             AllSources =new ObservableCollection<SourceViewModel>();
             Random r=new Random();
             foreach (var group in modelStarter.Groups)
             {
-                Groups.Add(new GroupViewModel(group, Color.FromArgb(100, Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0,255)), Convert.ToByte(r.Next(0, 255)))));
+                ProbabilityGroups.Add(new ProbabilityGroupViewModel(group, Color.FromArgb(100, Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0,255)), Convert.ToByte(r.Next(0, 255)))));
+                PriceGroups.Add(new PriceGroupViewModel(group, Color.FromArgb(100, Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)))));
                 foreach (var riskEvent in group.RiskEvents)
                 {
-                    AllEvents.Add(new EventViewModel(riskEvent, Groups.First(g => g.Name.Equals(group.Name)).GroupColor));
-                    AllPriceEvents.Add(new Price_EntityViewModel(riskEvent, Groups.First(g => g.Name.Equals(group.Name)).GroupColor));
+                    AllEvents.Add(new EventViewModel(riskEvent, PriceGroups.First(g => g.Name.Equals(group.Name)).GroupColor));
+                    AllPriceEvents.Add(new PriceEntityViewModel(riskEvent, PriceGroups.First(g => g.Name.Equals(group.Name)).GroupColor));
 
                 }
                 foreach (var source in group.RiskSources)
                 {
-                    AllSources.Add(new SourceViewModel(source, Groups.First(g => g.Name.Equals(group.Name)).GroupColor));
+                    AllSources.Add(new SourceViewModel(source, PriceGroups.First(g => g.Name.Equals(group.Name)).GroupColor));
                 }
             }
         }

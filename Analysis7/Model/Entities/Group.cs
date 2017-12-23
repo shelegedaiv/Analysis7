@@ -4,72 +4,48 @@ using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
-    public class Group:RiskEntity, IListener
+    public class Group:RiskEntity, IListener, IAverageProbability
     {
         public List<Event> RiskEvents { get; set; }
-        public List<Expert> Experts { get; set; }
+        public List<Expert> ProbabilityExperts { get; set; }
+        public List<Expert> PriceExperts { get; set; }
         public List<Source> RiskSources { get; set; }
-        public bool Availability { get; set; }
+        public Probability AverageProbability {get; set;}
 
         public Group(string groupName,string description, List<Event> currentGroupRiskEvents, List<Source> currentGroupRiskSources) :base(groupName, description)
         {
             RiskEvents = currentGroupRiskEvents;
             RiskSources = currentGroupRiskSources;
-            foreach (var riskEvent in RiskEvents )
+            foreach (var riskEvent in RiskEvents)
             {
                 riskEvent.AttachListener(this);
             }
-            Experts=new List<Expert>();
+            ProbabilityExperts=new List<Expert>();//todo return
             for (int i = 0; i < 10; i++)
             {
-                Experts.Add(new Expert(i, RiskEvents));
+                ProbabilityExperts.Add(new Expert(i,  RiskEvents.Select(e => e.Probability).ToList()));
             }
-            foreach (var expert in Experts  )     {
+            PriceExperts = new List<Expert>();
+            for (int i = 0; i < 10; i++)
+            {
+                PriceExperts.Add(new Expert(i, RiskEvents.Select(e=> (ProbabilityEntity)e.Price).ToList()));
+            }
+            foreach (var expert in ProbabilityExperts  )     {
                 expert.AttachListener(this);
             }
             foreach (var riskSource in RiskSources)
             {
                 riskSource.AttachListener(this);
             }
-
-
             Update();
         }
-
+        
+        /// !!!!!!!
+        
         public void Update()
         {
-            AverageProbability = new Probability(RiskEvents.Average(e => e.AverageProbability.Value));
+            AverageProbability = new Probability(RiskEvents.Average(e => e.Probability.AverageProbability.Value));
             Notify();
-        }
-
-        public void IsGroupAvailable()
-        {
-            foreach (var item in RiskSources)
-            {
-                if (item.Status)
-                {
-                    Availability = true;
-                    break;
-                }
-                Availability = false;
-            }
-
-            if (Availability == false)
-            {
-                Downgrade();
-                Update();
-            }
-
-
-        }
-
-        public void Downgrade()
-        {
-            foreach (var item in RiskEvents)
-            {
-                foreach (var probability in item.ExpertProbabilities)
-                    probability.Value = 0;
-            }
         }
     }
 }

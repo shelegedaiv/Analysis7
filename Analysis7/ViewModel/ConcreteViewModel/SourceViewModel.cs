@@ -28,7 +28,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         public Color GroupColor { get; set; }
         private readonly Source _modelSource;
 
-        public SourceViewModel(Source modelSource, Color color):base(modelSource.Name, modelSource.Description, modelSource.AverageProbability.Value)
+        public SourceViewModel(Source modelSource, Color color):base(modelSource.Name, modelSource.Description,0)
         {
             _modelSource = modelSource;
             GroupColor = color;

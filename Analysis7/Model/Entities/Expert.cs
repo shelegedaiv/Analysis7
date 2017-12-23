@@ -6,7 +6,7 @@ namespace Analysis7.Model.Entities
 {
     public class Expert: Subject,IListener
     {
-        private readonly List<Event> _bindedEvents;
+        private readonly List<ProbabilityEntity> _bindedEvents;
         public int Number { get; set; }
         public double AverageCoefProbability { get; set; }
         private readonly ExpertCoefficient _coefficient;
@@ -23,7 +23,7 @@ namespace Analysis7.Model.Entities
             }
         }
 
-        public Expert(int number, List<Event> bindedEvents)
+        public Expert(int number, List<ProbabilityEntity> bindedEvents)
         {
             Number = number;
             _coefficient = new ExpertCoefficient(1);
