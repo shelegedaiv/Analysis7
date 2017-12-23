@@ -69,6 +69,40 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             Update();
         }
 
+        private double _startPrice;
+        public double StartPrice
+        {
+            get => _startPrice;
+            set
+            {
+                _startPrice = value;
+                _modelGroup.StartPrice = value;
+                OnPropertyChanged(nameof(StartPrice));
+            }
+        }
+
+        private double _additionalPrice;
+        public double AdditionalPrice
+        {
+            get => _additionalPrice;
+            private set
+            {
+                _additionalPrice = value;
+                OnPropertyChanged(nameof(AdditionalPrice));
+            }
+        }
+
+        private double _finalPrice;
+        public double FinalPrice
+        {
+            get => _finalPrice;
+            private set
+            {
+                _startPrice = value;
+                OnPropertyChanged(nameof(FinalPrice));
+            }
+        }
+
         public void Update()
         {
             AverageProbability = _modelGroup.AverageProbability.Value;

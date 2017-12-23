@@ -7,27 +7,36 @@ using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
-    public class PriceEntity : ProbabilityEntity
+    public class PriceEntity : ProbabilityEntity, IPriceInterface
     {
-        private int _price;
-        public int Price
-        {
-            get => _price;
 
-            set => _price = (value < 0) ? 0 : value;
+        private double _startPrice;
+
+        public double StartPrice
+        {
+            get => _startPrice;
+            set
+            {
+                _startPrice = (value < 0) ? 0 : value;
+                Notify();
+            }
+        }
+
+        public double AdditionalPrice
+        {
+            get =>CoefExpertProbabilities.Sum() * _startPrice / _expertCoefs.Sum() ;
+        }
+
+        public double FinalPrice
+        {
+            get => AdditionalPrice + _startPrice;
         }
         #region constructors
+
         public PriceEntity( List<double> expertProbabilities):base(expertProbabilities)
         {
-            Price = 0;
+            StartPrice = 12;
         }
         #endregion
-        //todo add prices   
-        public override void Update()
-        {
-            base.Update();
-            
-        }
-
     }
 }

@@ -62,6 +62,7 @@
     <Compile Include="Model\Entities\Expert.cs" />
     <Compile Include="Model\Entities\ExpertCoefficient.cs" />
     <Compile Include="Model\Entities\IAverageProbability.cs" />
+    <Compile Include="Model\Entities\IPriceInterface.cs" />
     <Compile Include="Model\Entities\PriceEntity.cs" />
     <Compile Include="Model\Entities\ProbabilityEntity.cs" />
     <Compile Include="Model\Entities\Source.cs" />

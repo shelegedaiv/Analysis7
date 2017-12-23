@@ -4,7 +4,7 @@ using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
-    public class Group:RiskEntity, IListener, IAverageProbability
+    public class Group:RiskEntity, IListener, IAverageProbability, IPriceInterface
     {
         public List<Event> RiskEvents { get; set; }
         public List<Expert> ProbabilityExperts { get; set; }
@@ -12,6 +12,8 @@ namespace Analysis7.Model.Entities
         public List<Source> RiskSources { get; set; }
         public Probability AverageProbability {get; set;}
         public Probability PriceAverageProbability { get; set; }
+
+       
 
         public Group(string groupName,string description, List<Event> currentGroupRiskEvents, List<Source> currentGroupRiskSources) :base(groupName, description)
         {
@@ -50,6 +52,9 @@ namespace Analysis7.Model.Entities
                     .Average(e => e.Probability.AverageProbability.Value));
                 PriceAverageProbability =
                     new Probability(RiskEvents.Where(e => e.Status).Average(e => e.Price.AverageProbability.Value));
+                StartPrice=RiskEvents.Where(e=>e.Status).Sum(e=>e.Price.StartPrice);
+                AdditionalPrice = RiskEvents.Where(e => e.Status).Sum(e => e.Price.AdditionalPrice);
+                FinalPrice = RiskEvents.Where(e => e.Status).Sum(e => e.Price.FinalPrice);
             }
             else
             {
@@ -58,5 +63,10 @@ namespace Analysis7.Model.Entities
             }
             Notify();
         }
+
+        public double StartPrice { get; set; }
+        public double AdditionalPrice { get; set; }
+        public double FinalPrice { get; set; }
+
     }
 }
