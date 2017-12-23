@@ -11,6 +11,7 @@ namespace Analysis7.Model.Entities
         public List<Expert> PriceExperts { get; set; }
         public List<Source> RiskSources { get; set; }
         public Probability AverageProbability {get; set;}
+        public Probability PriceAverageProbability { get; set; }
 
         public Group(string groupName,string description, List<Event> currentGroupRiskEvents, List<Source> currentGroupRiskSources) :base(groupName, description)
         {
@@ -19,6 +20,8 @@ namespace Analysis7.Model.Entities
             foreach (var riskEvent in RiskEvents)
             {
                 riskEvent.AttachListener(this);
+                riskEvent.Price.AttachListener(this);
+                riskEvent.Probability.AttachListener(this);
             }
             ProbabilityExperts=new List<Expert>();//todo return
             for (int i = 0; i < 10; i++)
@@ -39,18 +42,20 @@ namespace Analysis7.Model.Entities
             }
             Update();
         }
-        
-        /// !!!!!!!
-        
         public void Update()
         {
-<<<<<<< HEAD
-            AverageProbability = new Probability(RiskEvents.Average(e => e.Probability.AverageProbability.Value));
-=======
-            if (RiskEvents.Any(e=>e.Status))
-                AverageProbability = new Probability(RiskEvents.Where(e=>e.Status).Average(e => e.AverageProbability.Value));
-            else AverageProbability=new Probability(0);
->>>>>>> c3f1630288749a0d785139996f6f7bc855404f48
+            if (RiskEvents.Any(e => e.Status))
+            {
+                AverageProbability = new Probability(RiskEvents.Where(e => e.Status)
+                    .Average(e => e.Probability.AverageProbability.Value));
+                PriceAverageProbability =
+                    new Probability(RiskEvents.Where(e => e.Status).Average(e => e.Price.AverageProbability.Value));
+            }
+            else
+            {
+                AverageProbability=new Probability(0);
+                PriceAverageProbability=new Probability(0);
+            }
             Notify();
         }
     }

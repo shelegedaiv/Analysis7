@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
@@ -14,7 +11,7 @@ namespace Analysis7.Model.Entities
         public double CoefAverageProbability { get; private set; }
         protected List<double> _expertCoefs;
         public Probability AverageProbability { get; private set; }
-
+        public bool Status;
         public ProbabilityEntity(List<double> expertProbabilities)
         {
             AverageProbability = new Probability(0);

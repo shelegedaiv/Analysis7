@@ -82,7 +82,5 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             ExpertAverageProbabilities=new ObservableCollection<double>(_modelGroup.ProbabilityExperts.Select(ex=>ex.AverageCoefProbability).ToList());
             AverageCoefProbability = ExpertAverageProbabilities.Sum()/ExpertCoefficientsSum;
         }
-
-
     }
 }

@@ -48,9 +48,9 @@ namespace Analysis7.ViewModel
                 OnPropertyChanged(nameof(AllEvents));
             }
         }
-        private ObservableCollection<PriceEntityViewModel> _allPriceEvents;
+        private ObservableCollection<PriceEventViewModel> _allPriceEvents;
 
-        public ObservableCollection<PriceEntityViewModel> AllPriceEvents
+        public ObservableCollection<PriceEventViewModel> AllPriceEvents
         {
             get => _allPriceEvents;
             set
@@ -76,17 +76,18 @@ namespace Analysis7.ViewModel
             ProbabilityGroups=new ObservableCollection<ProbabilityGroupViewModel>();
             PriceGroups = new ObservableCollection<PriceGroupViewModel>();
             AllEvents =new ObservableCollection<EventViewModel>();
-            AllPriceEvents = new ObservableCollection<PriceEntityViewModel>();
+            AllPriceEvents = new ObservableCollection<PriceEventViewModel>();
             AllSources =new ObservableCollection<SourceViewModel>();
             Random r=new Random();
             foreach (var group in modelStarter.Groups)
             {
-                ProbabilityGroups.Add(new ProbabilityGroupViewModel(group, Color.FromArgb(100, Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0,255)), Convert.ToByte(r.Next(0, 255)))));
-                PriceGroups.Add(new PriceGroupViewModel(group, Color.FromArgb(100, Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)))));
+                var groupColor= Color.FromArgb(100, Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)));
+                ProbabilityGroups.Add(new ProbabilityGroupViewModel(group, groupColor));
+                PriceGroups.Add(new PriceGroupViewModel(group, groupColor));
                 foreach (var riskEvent in group.RiskEvents)
                 {
                     AllEvents.Add(new EventViewModel(riskEvent, PriceGroups.First(g => g.Name.Equals(group.Name)).GroupColor));
-                    AllPriceEvents.Add(new PriceEntityViewModel(riskEvent, PriceGroups.First(g => g.Name.Equals(group.Name)).GroupColor));
+                    AllPriceEvents.Add(new PriceEventViewModel(riskEvent, PriceGroups.First(g => g.Name.Equals(group.Name)).GroupColor));
 
                 }
                 foreach (var source in group.RiskSources)

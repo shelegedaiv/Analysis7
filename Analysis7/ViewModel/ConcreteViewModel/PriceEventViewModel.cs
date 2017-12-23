@@ -11,10 +11,8 @@ using Analysis7.Model.Entities;
 
 namespace Analysis7.ViewModel.ConcreteViewModel
 {
-    public class PriceEntityViewModel: RiskEntityViewModel, IListener
-
+    public class PriceEventViewModel: RiskEntityViewModel, IListener
     {
-
         private int _price;
         public int Price
         {
@@ -25,7 +23,19 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 OnPropertyChanged(nameof(Price));
             }
         }
-         
+        private bool _status;
+        public bool Status
+        {
+            get => _status;
+            set
+            {
+                _status = value;
+                OnPropertyChanged(nameof(Status));
+                _modelEvent.Status = value;
+                _modelEvent.Update();
+                Update();
+            }
+        }
         private ObservableCollection<double> _expertProbabilities;
         public ObservableCollection<double> ExpertProbabilities
         {
@@ -70,20 +80,28 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         public Color GroupColor { get; set; }
         private readonly Event _modelEvent;
 
-        public PriceEntityViewModel(Event modelEvent, Color color) : base(modelEvent.Name, modelEvent.Description, modelEvent.Probability.AverageProbability.Value)
+        public PriceEventViewModel(Event modelEvent, Color color) : base(modelEvent.Name, modelEvent.Description, modelEvent.Probability.AverageProbability.Value)
         {
             _modelEvent = modelEvent;
             GroupColor = color;
+            Status = _modelEvent.Status;
             _modelEvent.Price.AttachListener(this);
             Update();
         }
 
         public void Update()
         {
-            ExpertProbabilities = new ObservableCollection<double>(_modelEvent.Price.ExpertProbabilities.Select(ev => ev.Value).ToList());
-            CoefExpertProbabilities = new ObservableCollection<double>(_modelEvent.Price.CoefExpertProbabilities.Select(ev => ev).ToList());
-            AverageProbability = _modelEvent.Price.AverageProbability.Value;
-            CoefAverageProbability = _modelEvent.Price.CoefAverageProbability;
+            if (Status)
+            {
+                ExpertProbabilities =
+                    new ObservableCollection<double>(_modelEvent.Price.ExpertProbabilities.Select(ev => ev.Value)
+                        .ToList());
+                CoefExpertProbabilities =
+                    new ObservableCollection<double>(
+                        _modelEvent.Price.CoefExpertProbabilities.Select(ev => ev).ToList());
+                AverageProbability = _modelEvent.Price.AverageProbability.Value;
+                CoefAverageProbability = _modelEvent.Price.CoefAverageProbability;
+            }
         }
     }
 }

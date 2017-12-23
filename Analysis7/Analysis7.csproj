@@ -75,7 +75,7 @@
     <Compile Include="ViewModel\AbstractViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\EventViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\ProbabilityGroupViewModel.cs" />
-    <Compile Include="ViewModel\ConcreteViewModel\PriceEntityViewModel.cs" />
+    <Compile Include="ViewModel\ConcreteViewModel\PriceEventViewModel.cs" />
     <Compile Include="ViewModel\AbstractViewModel\RiskEntityViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\PriceGroupViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
