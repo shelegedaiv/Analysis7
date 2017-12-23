@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Analysis7"
+        xmlns:converter="clr-namespace:Analysis7.Converter"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
-   
+   <Window.Resources>
+       <converter:ProbabilityNameConverter x:Key="ProbabilityNameConverter"></converter:ProbabilityNameConverter>
+   </Window.Resources>
     <StackPanel>
         <DataGrid ItemsSource="{Binding AllSources, Mode=TwoWay}" AutoGenerateColumns="False">
             <DataGrid.RowStyle>
@@ -51,7 +54,8 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-                
+                <DataGridCheckBoxColumn Header="Статус"  Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
                 <DataGridTextColumn Header="1" Binding="{Binding ExpertProbabilities[0], Mode=TwoWay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="2" Binding="{Binding ExpertProbabilities[1], Mode=TwoWay}"></DataGridTextColumn>
                 <DataGridTextColumn Header="3" Binding="{Binding ExpertProbabilities[2], Mode=TwoWay}"></DataGridTextColumn>
@@ -77,6 +81,15 @@
                 <DataGridTextColumn Header="10*" Binding="{Binding CoefExpertProbabilities[9]}" IsReadOnly="True"></DataGridTextColumn>
 
                 <DataGridTextColumn Header="Cер.*" Binding="{Binding CoefAverageProbability}" IsReadOnly="True"></DataGridTextColumn>
+                
+                <DataGridTextColumn Header="Ризик">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource ProbabilityNameConverter}">
+                            <Binding Path="CoefAverageProbability"></Binding>
+                            <Binding Path="Status"></Binding>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

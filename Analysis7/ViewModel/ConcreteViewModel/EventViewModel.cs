@@ -41,7 +41,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private double _coefAverageProbability;
-
         public double CoefAverageProbability
         {
             get => _coefAverageProbability;
@@ -52,11 +51,26 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             }
         }
         public Color GroupColor { get; set; }
+
+        private bool _status;
+        public bool Status
+        {
+            get => _status;
+            set
+            {
+                _status = value;
+                OnPropertyChanged(nameof(Status));
+                _modelEvent.Status = value;
+                _modelEvent.Update();
+            }
+        }
+
         private readonly Event _modelEvent;
 
         public EventViewModel(Event modelEvent, Color color) : base(modelEvent.Name, modelEvent.Description, modelEvent.Probability.AverageProbability.Value)
         {
             _modelEvent = modelEvent;
+            Status = _modelEvent.Status;
             GroupColor = color;
             _modelEvent.Probability.AttachListener(this);
             Update();
@@ -64,10 +78,35 @@ namespace Analysis7.ViewModel.ConcreteViewModel
 
         public void Update()
         {
+<<<<<<< HEAD
             ExpertProbabilities = new ObservableCollection<double>(_modelEvent.Probability.ExpertProbabilities.Select(ev => ev.Value).ToList());
             CoefExpertProbabilities = new ObservableCollection<double>(_modelEvent.Probability.CoefExpertProbabilities.Select(ev => ev).ToList());
             AverageProbability = _modelEvent.Probability.AverageProbability.Value;
             CoefAverageProbability = _modelEvent.Probability.CoefAverageProbability;
+=======
+            if (Status)
+            {
+                ExpertProbabilities = new ObservableCollection<double>(_modelEvent.ExpertProbabilities.Select(ev => ev.Value).ToList());
+                CoefExpertProbabilities = new ObservableCollection<double>(_modelEvent.CoefExpertProbabilities.Select(ev => ev).ToList());
+                AverageProbability = _modelEvent.AverageProbability.Value;
+                CoefAverageProbability = _modelEvent.CoefAverageProbability;
+            }
+            else
+            {
+                var expertProbabilities = new ObservableCollection<double>();
+                var coefExpertProbabilities = new ObservableCollection<double>();
+                for (int i = 0; i < 10; i++)
+                {
+                    expertProbabilities.Add(0);
+                    coefExpertProbabilities.Add(0);
+                }
+                ExpertProbabilities = expertProbabilities;
+                CoefExpertProbabilities = coefExpertProbabilities;
+                AverageProbability = 0;
+                CoefAverageProbability =0;
+            }
+            
+>>>>>>> c3f1630288749a0d785139996f6f7bc855404f48
         }
     }
 }

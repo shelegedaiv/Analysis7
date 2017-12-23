@@ -44,7 +44,13 @@ namespace Analysis7.Model.Entities
         
         public void Update()
         {
+<<<<<<< HEAD
             AverageProbability = new Probability(RiskEvents.Average(e => e.Probability.AverageProbability.Value));
+=======
+            if (RiskEvents.Any(e=>e.Status))
+                AverageProbability = new Probability(RiskEvents.Where(e=>e.Status).Average(e => e.AverageProbability.Value));
+            else AverageProbability=new Probability(0);
+>>>>>>> c3f1630288749a0d785139996f6f7bc855404f48
             Notify();
         }
     }
