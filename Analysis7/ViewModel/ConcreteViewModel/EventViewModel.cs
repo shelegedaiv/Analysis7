@@ -61,7 +61,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 _status = value;
                 OnPropertyChanged(nameof(Status));
                 _modelEvent.Status = value;
-                Update();
+                _modelEvent.Update();
             }
         }
 

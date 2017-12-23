@@ -66,15 +66,5 @@ namespace Analysis7.Model.Entities
                 CoefAverageProbability = CoefExpertProbabilities.Sum()/_expertCoefs.Sum();
             Notify();
         }
-
-        public void Downgrade()
-        {
-            Status = false;
-            foreach (var probability in ExpertProbabilities)
-            {
-                probability.Value = 0;
-            }
-            Update();
-        }
     }
 }

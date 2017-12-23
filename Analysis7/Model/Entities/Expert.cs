@@ -36,7 +36,10 @@ namespace Analysis7.Model.Entities
 
         public void Update()
         {
-            AverageCoefProbability = _bindedEvents.Average(ev => ev.CoefExpertProbabilities[Number]);
+            if (_bindedEvents.Any(e => e.Status))
+                AverageCoefProbability = _bindedEvents.Where(ev => ev.Status)
+                    .Average(ev => ev.CoefExpertProbabilities[Number]);
+            else AverageCoefProbability = 0;
         }
     }
 }
