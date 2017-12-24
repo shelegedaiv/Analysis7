@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="Analysis7.UserControls.Etap1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Analysis7.UserControls"
+             xmlns:converter="clr-namespace:Analysis7.Converter"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converter:ProbabilityNameConverter x:Key="ProbabilityNameConverter"></converter:ProbabilityNameConverter>
+    </UserControl.Resources>
+    
+    
+    <StackPanel>
+        <DataGrid ItemsSource="{Binding AllSources, Mode=TwoWay}" AutoGenerateColumns="False" CanUserSortColumns="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{Binding GroupColor}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Джерело ризику" Binding="{Binding Description}" IsReadOnly="True">
+
+                </DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="Статус"  Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                </DataGridCheckBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid ItemsSource="{Binding ProbabilityGroups, Mode=TwoWay}" AutoGenerateColumns="False" CanUserSortColumns="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{Binding GroupColor}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Група" Binding="{Binding Description}" IsReadOnly="True">
+                </DataGridTextColumn>
+               
+                <DataGridTextColumn Header="Кількість джерел" Binding="{Binding SourceNumber}" IsReadOnly="True"></DataGridTextColumn>
+               
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</UserControl>

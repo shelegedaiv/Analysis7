@@ -59,9 +59,9 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             set
             {
                 _status = value;
-                OnPropertyChanged(nameof(Status));
                 _modelEvent.Status = value;
-                _modelEvent.Update();
+                _modelEvent.Probability.Update();
+                _modelEvent.Price.Update();
                 Update();
             }
         }
@@ -122,13 +122,14 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         {
             _modelEvent = modelEvent;
             GroupColor = color;
-            Status = _modelEvent.Status;
+            _status = _modelEvent.Status;
             _modelEvent.Price.AttachListener(this);
             Update();
         }
 
         public void Update()
         {
+            _status = _modelEvent.Status;
             if (Status)
             {
                 ExpertProbabilities =
@@ -143,6 +144,25 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 AdditionalPrice = _modelEvent.Price.AdditionalPrice;
                 FinalPrice = _modelEvent.Price.FinalPrice;
             }
+            else
+            {
+                var expertProbabilities = new ObservableCollection<double>();
+                var coefExpertProbabilities = new ObservableCollection<double>();
+                for (int i = 0; i < 10; i++)
+                {
+                    expertProbabilities.Add(0);
+                    coefExpertProbabilities.Add(0);
+                }
+                ExpertProbabilities = expertProbabilities;
+                CoefExpertProbabilities = coefExpertProbabilities;
+                AverageProbability = 0;
+                CoefAverageProbability = 0;
+                _startPrice = 0;
+                AdditionalPrice =0;
+                FinalPrice = 0;
+            }
+            OnPropertyChanged(nameof(StartPrice));
+            OnPropertyChanged(nameof(Status));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Analysis7.Model.Entities
+﻿using System;
+
+namespace Analysis7.Model.Entities
 {
     public interface IPriceInterface
     {

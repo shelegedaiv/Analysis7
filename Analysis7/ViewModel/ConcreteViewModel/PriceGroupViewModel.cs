@@ -73,11 +73,11 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         public double StartPrice
         {
             get => _startPrice;
-            set
+            private set
             {
                 _startPrice = value;
-                _modelGroup.StartPrice = value;
                 OnPropertyChanged(nameof(StartPrice));
+
             }
         }
 
@@ -98,10 +98,35 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             get => _finalPrice;
             private set
             {
-                _startPrice = value;
+                _finalPrice = value;
                 OnPropertyChanged(nameof(FinalPrice));
             }
         }
+
+
+        private int _eventsNumber;
+        public int EventsNumber
+        {
+            get => _eventsNumber;
+            private set
+            {
+                _eventsNumber = value;
+                OnPropertyChanged(nameof(EventsNumber));
+            }
+        }
+
+        private int _sourceNumber;
+        public int SourceNumber
+        {
+            get => _sourceNumber;
+            private set
+            {
+                _sourceNumber = value;
+                OnPropertyChanged(nameof(SourceNumber));
+            }
+        }
+
+
 
         public void Update()
         {
@@ -112,6 +137,11 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             _modelGroup.PriceExperts.ForEach(ex => ex.Update());
             ExpertAverageProbabilities = new ObservableCollection<double>(_modelGroup.PriceExperts.Select(ex => ex.AverageCoefProbability).ToList());
             AverageCoefProbability = ExpertAverageProbabilities.Sum() / ExpertCoefficientsSum;
+            SourceNumber = _modelGroup.SourceNumber;
+            EventsNumber = _modelGroup.EventsNumber;
+            StartPrice = _modelGroup.StartPrice;
+            AdditionalPrice = _modelGroup.AdditionalPrice;
+            FinalPrice = _modelGroup.FinalPrice;
         }
 
     }

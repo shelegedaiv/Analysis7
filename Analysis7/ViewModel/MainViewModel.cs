@@ -4,10 +4,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.Remoting.Channels;
+using System.Windows.Input;
 using System.Windows.Media;
 using Analysis7.Model;
 using Analysis7.ViewModel.AbstractViewModel;
 using Analysis7.ViewModel.ConcreteViewModel;
+using ViewModel.Command;
 
 namespace Analysis7.ViewModel
 {
@@ -71,17 +73,40 @@ namespace Analysis7.ViewModel
                 OnPropertyChanged(nameof(AllSources));
             }
         }
+
+        private ObservableCollection<ActivityViewModel> _activities;
+        public ObservableCollection<ActivityViewModel> Activities
+        {
+            get => _activities;
+            set
+            {
+                _activities = value;
+                OnPropertyChanged(nameof(Activities));
+            }
+        }
+
+        private ModelStarter _modelStarter;
+
         public MainViewModel(ModelStarter modelStarter)
         {
-            ProbabilityGroups=new ObservableCollection<ProbabilityGroupViewModel>();
+            Save =new BaseCommand(SaveGame);
+            Load = new BaseCommand(LoadGame);
+            SetModel(modelStarter);
+        }
+
+        private void SetModel(ModelStarter modelStarter)
+        {
+            ProbabilityGroups = new ObservableCollection<ProbabilityGroupViewModel>();
             PriceGroups = new ObservableCollection<PriceGroupViewModel>();
-            AllEvents =new ObservableCollection<EventViewModel>();
+            AllEvents = new ObservableCollection<EventViewModel>();
             AllPriceEvents = new ObservableCollection<PriceEventViewModel>();
-            AllSources =new ObservableCollection<SourceViewModel>();
-            Random r=new Random();
+            AllSources = new ObservableCollection<SourceViewModel>();
+            Activities = new ObservableCollection<ActivityViewModel>();
+            Random r = new Random();
+            _modelStarter = modelStarter;
             foreach (var group in modelStarter.Groups)
             {
-                var groupColor= Color.FromArgb(100, Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)));
+                var groupColor = Color.FromArgb(100, Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)), Convert.ToByte(r.Next(0, 255)));
                 ProbabilityGroups.Add(new ProbabilityGroupViewModel(group, groupColor));
                 PriceGroups.Add(new PriceGroupViewModel(group, groupColor));
                 foreach (var riskEvent in group.RiskEvents)
@@ -95,15 +120,25 @@ namespace Analysis7.ViewModel
                     AllSources.Add(new SourceViewModel(source, PriceGroups.First(g => g.Name.Equals(group.Name)).GroupColor));
                 }
             }
+            foreach (var activity in modelStarter.Activities)
+            {
+                Activities.Add(new ActivityViewModel(activity));
+            }
         }
+        #region Command
+        public ICommand Save { get; set; }
+        public ICommand Load { get; set; }
+
+        public void SaveGame(object slotNumber)
+        {
+            DataSerializer.SerializeData(@"\saving.txt",_modelStarter);
+        }
+
+        public void LoadGame(object slotNumber)
+        {
+            _modelStarter = DataSerializer.DeserializeState(@"\saving.txt");
+            SetModel(_modelStarter);
+        }
+        #endregion
     }
 }
-//var t1 = new EventViewModel("Затримки у постачанні обладнання, необхідного для підтримки процесу розроблення ПЗ");
-//var t2 = new EventViewModel("Затримки у постачанні інструментальних засобів, необхідних для підтримки процесу розроблення ПЗ;");
-//var t3 = new EventViewModel("Небажання команди виконавців використовувати інструментальні засоби для підтримки процесу розроблення ПЗ");
-//var t4 = new EventViewModel("Формування запитів на більш потужні інструментальні засоби розроблення ПЗ");
-//var t5 = new EventViewModel("Відмова команди виконавців від CASE-засобів розроблення ПЗ");
-//var t6 = new EventViewModel("Неефективність програмного коду, згенерованого CASE-засобами розроблення ПЗ");
-//var t7 = new EventViewModel("Неможливість інтеграції CASE-засобів з іншими інструментальними засобами для підтримки процесу розроблення ПЗ");
-//var t8 = new EventViewModel("Недостатня продуктивність баз(и) даних для підтримки процесу розроблення ПЗ");
-//var t9 = new EventViewModel("Програмні компоненти, які використовують повторно в ПЗ, мають дефекти та обмежені функціональні можливості");

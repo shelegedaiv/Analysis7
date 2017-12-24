@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Analysis7.Model.Entities
 {
+    [Serializable]
     public class Source : RiskEntity
     {
 
@@ -14,11 +15,6 @@ namespace Analysis7.Model.Entities
         {
             Status = true;
         }
-
-
         
-
-
-
     }
 }

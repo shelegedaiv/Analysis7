@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
+    [Serializable]
     public class ProbabilityEntity:Subject, IListener, IAverageProbability
     {
         public List<Probability> ExpertProbabilities { get; set; }

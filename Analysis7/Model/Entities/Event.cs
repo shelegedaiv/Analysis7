@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace Analysis7.Model.Entities
 {
+    [Serializable]
     public class Event:RiskEntity
     {
         public ProbabilityEntity Probability;

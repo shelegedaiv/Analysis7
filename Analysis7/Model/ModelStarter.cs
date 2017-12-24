@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Analysis7.Model.Entities;
 
 namespace Analysis7.Model
 {
+    [Serializable]
     public class ModelStarter
     {
         public List<Group> Groups=new List<Group>();
 
         public List<Event> Events=new List<Event>();
+
+        public List<Activity> Activities = new List<Activity>();
 
         public ModelStarter()
         {
@@ -51,10 +55,22 @@ namespace Analysis7.Model
                 new Event("c2", "Переоцінювання витрат на реалізацію програмного проекту (надмірно висока вартість)")
             };
             var costGroup=new Group("c", "Множина настання вартісних ризикових подій",costEvents, techSources);
+
+
+            var activities=new List<Activity>
+            {
+                new Activity("попереднє навчання членів проектного колективу;"),
+                new Activity("узгодження детального переліку вимог до ПЗ із замовником;;"),
+                new Activity("внесення узгодженого переліку вимог до ПЗ замовника в договір;")
+
+            };
+
             Events.AddRange(techEvents);
             Groups.Add(techGroup);
             Events.AddRange(costEvents);
             Groups.Add(costGroup);
+
+            Activities.AddRange(activities);
         }
         //----------------------------------------------
        

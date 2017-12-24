@@ -10,17 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Analysis7.Model;
 
-namespace Analysis7
+namespace Analysis7.UserControls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Etap2.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Etap2 : UserControl
     {
-        public MainWindow()
+        public Etap2()
         {
             InitializeComponent();
         }

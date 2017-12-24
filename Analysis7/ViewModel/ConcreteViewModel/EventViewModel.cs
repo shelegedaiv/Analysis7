@@ -58,10 +58,11 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             set
             {
                 _status = value;
-                OnPropertyChanged(nameof(Status));
                 _modelEvent.Status = value;
-                _modelEvent.Update();
+                _modelEvent.Price.Update();
+                _modelEvent.Probability.Update();
                 Update();
+                
             }
         }
         private readonly Event _modelEvent;
@@ -69,7 +70,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         public EventViewModel(Event modelEvent, Color color) : base(modelEvent.Name, modelEvent.Description, modelEvent.Probability.AverageProbability.Value)
         {
             _modelEvent = modelEvent;
-            Status = _modelEvent.Status;
             GroupColor = color;
             _modelEvent.Probability.AttachListener(this);
             Update();
@@ -77,6 +77,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
 
         public void Update()
         {
+            _status = _modelEvent.Status;
             if (Status)
             {
                 ExpertProbabilities = new ObservableCollection<double>(_modelEvent.Probability.ExpertProbabilities.Select(ev => ev.Value).ToList());
@@ -98,6 +99,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 AverageProbability = 0;
                 CoefAverageProbability =0;
             }
+            OnPropertyChanged(nameof(Status));
         }
     }
 }

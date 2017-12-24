@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
+    [Serializable]
     public class Group:RiskEntity, IListener, IAverageProbability, IPriceInterface
     {
         public List<Event> RiskEvents { get; set; }
@@ -13,7 +15,15 @@ namespace Analysis7.Model.Entities
         public Probability AverageProbability {get; set;}
         public Probability PriceAverageProbability { get; set; }
 
-       
+        public int SourceNumber
+        {
+            get => RiskSources.Count(e => e.Status);
+        }
+
+        public int EventsNumber
+        {
+            get => RiskEvents.Count(e=>e.Status);
+        }
 
         public Group(string groupName,string description, List<Event> currentGroupRiskEvents, List<Source> currentGroupRiskSources) :base(groupName, description)
         {
@@ -61,6 +71,7 @@ namespace Analysis7.Model.Entities
                 AverageProbability=new Probability(0);
                 PriceAverageProbability=new Probability(0);
             }
+
             Notify();
         }
 

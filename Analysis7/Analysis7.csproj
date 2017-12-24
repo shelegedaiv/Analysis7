@@ -54,11 +54,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\BaseCommand.cs" />
     <Compile Include="Converter\ProbabilityNameConverter.cs" />
-    <Compile Include="Converter\StatusColorConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\DataSerializer.cs" />
+    <Compile Include="Model\Entities\Activity.cs" />
     <Compile Include="Model\Entities\Expert.cs" />
     <Compile Include="Model\Entities\ExpertCoefficient.cs" />
     <Compile Include="Model\Entities\IAverageProbability.cs" />
@@ -73,7 +75,20 @@
     <Compile Include="Model\Observer\Subject.cs" />
     <Compile Include="Model\Entities\Probability.cs" />
     <Compile Include="Model\Entities\RiskEntity.cs" />
+    <Compile Include="UserControls\Etap2.xaml.cs">
+      <DependentUpon>Etap2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Etap4.xaml.cs">
+      <DependentUpon>Etap4.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Etap3.xaml.cs">
+      <DependentUpon>Etap3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Etap1.xaml.cs">
+      <DependentUpon>Etap1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AbstractViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\ConcreteViewModel\ActivityViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\EventViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\ProbabilityGroupViewModel.cs" />
     <Compile Include="ViewModel\ConcreteViewModel\PriceEventViewModel.cs" />
@@ -114,6 +129,22 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Etap2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Etap4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Etap3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Etap1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,6 +7,7 @@ using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
+    [Serializable]
     public class PriceEntity : ProbabilityEntity, IPriceInterface
     {
 

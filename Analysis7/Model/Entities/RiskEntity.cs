@@ -1,7 +1,9 @@
-﻿using Analysis7.Model.Observer;
+﻿using System;
+using Analysis7.Model.Observer;
 
 namespace Analysis7.Model.Entities
 {
+    [Serializable]
     public abstract class RiskEntity:Subject
     {
         public string Name { get; }

@@ -71,7 +71,29 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             _modelGroup.AttachListener(this);
             Update();
         }
-        
+
+        private int _eventsNumber;
+        public int EventsNumber
+        {
+            get => _eventsNumber;
+            private set
+            {
+                _eventsNumber = value;
+                OnPropertyChanged(nameof(EventsNumber));
+            }
+        }
+
+        private int _sourceNumber;
+        public int SourceNumber
+        {
+            get => _sourceNumber;
+            private set
+            {
+                _sourceNumber = value;
+                OnPropertyChanged(nameof(SourceNumber));
+            }
+        }
+
         public void Update()
         {
             AverageProbability = _modelGroup.AverageProbability.Value;
@@ -81,6 +103,8 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             _modelGroup.ProbabilityExperts.ForEach(ex=>ex.Update());
             ExpertAverageProbabilities=new ObservableCollection<double>(_modelGroup.ProbabilityExperts.Select(ex=>ex.AverageCoefProbability).ToList());
             AverageCoefProbability = ExpertAverageProbabilities.Sum()/ExpertCoefficientsSum;
+            SourceNumber = _modelGroup.SourceNumber;
+            EventsNumber = _modelGroup.EventsNumber;
         }
     }
 }
