@@ -11,6 +11,7 @@
    <Window.Resources>
       
    </Window.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
     <StackPanel>
         <Menu VerticalAlignment="Top">
             <MenuItem Header="Save" Command="{Binding Save}" ></MenuItem>
@@ -39,4 +40,5 @@
             </TabItem>
         </TabControl>
     </StackPanel>
+    </ScrollViewer>
 </Window>

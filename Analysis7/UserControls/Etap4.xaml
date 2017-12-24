@@ -27,7 +27,8 @@
 
         <DataGrid ItemsSource="{Binding AllEvents, Mode=TwoWay}" 
                   AutoGenerateColumns="False"
-                  MinColumnWidth="40" CanUserSortColumns="False">
+                  MinColumnWidth="40" CanUserSortColumns="False"
+                  Margin="0,10,0,0">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Setter Property="Background">
