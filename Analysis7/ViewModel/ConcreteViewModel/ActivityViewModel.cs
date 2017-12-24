@@ -1,5 +1,4 @@
-﻿using System;
-using Analysis7.Model.Entities;
+﻿using Analysis7.Model.Entities;
 using Analysis7.ViewModel.AbstractViewModel;
 
 namespace Analysis7.ViewModel.ConcreteViewModel
@@ -11,7 +10,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         private string _accepting;
         private string _avoiding;
         private string _transferring;
-        private Activity _modelActivity;
+        private readonly Activity _modelActivity;
 
         public string Description
         {

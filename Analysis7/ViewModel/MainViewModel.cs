@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Runtime.Remoting.Channels;
 using System.Windows.Input;
 using System.Windows.Media;
+using Analysis7.Converter;
 using Analysis7.Model;
 using Analysis7.ViewModel.AbstractViewModel;
 using Analysis7.ViewModel.ConcreteViewModel;
-using ViewModel.Command;
 
 namespace Analysis7.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        private ObservableCollection<ProbabilityGroupViewModel> _probabilityGroups;
+        private ModelStarter _modelStarter;
 
+        private ObservableCollection<ProbabilityGroupViewModel> _probabilityGroups;
         public ObservableCollection<ProbabilityGroupViewModel> ProbabilityGroups
         {
             get => _probabilityGroups;
@@ -27,8 +25,8 @@ namespace Analysis7.ViewModel
             }
             
         }
-        private ObservableCollection<PriceGroupViewModel> _priceGroups;
 
+        private ObservableCollection<PriceGroupViewModel> _priceGroups;
         public ObservableCollection<PriceGroupViewModel> PriceGroups
         {
             get => _priceGroups;
@@ -39,8 +37,8 @@ namespace Analysis7.ViewModel
             }
 
         }
-        private ObservableCollection<EventViewModel> _allEvents;
 
+        private ObservableCollection<EventViewModel> _allEvents;
         public ObservableCollection<EventViewModel> AllEvents
         {
             get => _allEvents;
@@ -50,8 +48,8 @@ namespace Analysis7.ViewModel
                 OnPropertyChanged(nameof(AllEvents));
             }
         }
-        private ObservableCollection<PriceEventViewModel> _allPriceEvents;
 
+        private ObservableCollection<PriceEventViewModel> _allPriceEvents;
         public ObservableCollection<PriceEventViewModel> AllPriceEvents
         {
             get => _allPriceEvents;
@@ -63,7 +61,6 @@ namespace Analysis7.ViewModel
         }
 
         private ObservableCollection<SourceViewModel> _allSources;
-
         public ObservableCollection<SourceViewModel> AllSources
         {
             get => _allSources;
@@ -84,8 +81,6 @@ namespace Analysis7.ViewModel
                 OnPropertyChanged(nameof(Activities));
             }
         }
-
-        private ModelStarter _modelStarter;
 
         public MainViewModel(ModelStarter modelStarter)
         {
@@ -113,7 +108,6 @@ namespace Analysis7.ViewModel
                 {
                     AllEvents.Add(new EventViewModel(riskEvent, PriceGroups.First(g => g.Name.Equals(group.Name)).GroupColor));
                     AllPriceEvents.Add(new PriceEventViewModel(riskEvent, PriceGroups.First(g => g.Name.Equals(group.Name)).GroupColor));
-
                 }
                 foreach (var source in group.RiskSources)
                 {
@@ -125,6 +119,7 @@ namespace Analysis7.ViewModel
                 Activities.Add(new ActivityViewModel(activity));
             }
         }
+        
         #region Command
         public ICommand Save { get; set; }
         public ICommand Load { get; set; }

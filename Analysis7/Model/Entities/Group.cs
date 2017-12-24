@@ -15,6 +15,10 @@ namespace Analysis7.Model.Entities
         public Probability AverageProbability {get; set;}
         public Probability PriceAverageProbability { get; set; }
 
+        public double StartPrice { get; set; }
+        public double AdditionalPrice { get; set; }
+        public double FinalPrice { get; set; }
+
         public int SourceNumber
         {
             get => RiskSources.Count(e => e.Status);
@@ -35,7 +39,7 @@ namespace Analysis7.Model.Entities
                 riskEvent.Price.AttachListener(this);
                 riskEvent.Probability.AttachListener(this);
             }
-            ProbabilityExperts=new List<Expert>();//todo return
+            ProbabilityExperts=new List<Expert>();
             for (int i = 0; i < 10; i++)
             {
                 ProbabilityExperts.Add(new Expert(i,  RiskEvents.Select(e => e.Probability).ToList()));
@@ -54,6 +58,7 @@ namespace Analysis7.Model.Entities
             }
             Update();
         }
+
         public void Update()
         {
             if (RiskEvents.Any(e => e.Status))
@@ -70,14 +75,11 @@ namespace Analysis7.Model.Entities
             {
                 AverageProbability=new Probability(0);
                 PriceAverageProbability=new Probability(0);
+                StartPrice = 0;
+                AdditionalPrice = 0;
+                FinalPrice = 0;
             }
-
             Notify();
         }
-
-        public double StartPrice { get; set; }
-        public double AdditionalPrice { get; set; }
-        public double FinalPrice { get; set; }
-
     }
 }

@@ -32,7 +32,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         {
             _modelSource = modelSource;
             GroupColor = color;
-            _modelSource.AttachListener(this);
+            _modelSource.AttachListenerViewModel(this);
             Update();
         }
 

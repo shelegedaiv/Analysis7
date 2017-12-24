@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ViewModel.Command
+namespace Analysis7.Converter
 {
     public class BaseCommand:ICommand
     {

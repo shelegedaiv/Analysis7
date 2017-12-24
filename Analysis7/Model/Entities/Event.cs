@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace Analysis7.Model.Entities
 {
     [Serializable]
@@ -10,24 +9,23 @@ namespace Analysis7.Model.Entities
         public ProbabilityEntity Probability;
         public PriceEntity Price;
 
-        #region constructors
         public Event(string eventName, string description) : this(eventName, description, new List<double>())
         {
-            //todo delete
         }
         
         public Event(string eventName, string description, List<double> expertProbabilities):base(eventName, description)
         {
             Probability = new ProbabilityEntity(expertProbabilities);
-            Price = new PriceEntity(expertProbabilities);            
+            Price = new PriceEntity(expertProbabilities);           
+            Update();
         }
-        #endregion
 
-        public void Update()//todo check 
+        public void Update()
         {
             Probability.Status = Status;
             Price.Status = Status;
-            Notify();
+            Probability.Notify();
+            Price.Notify();
         }
     }
 }

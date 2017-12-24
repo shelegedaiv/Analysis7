@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data;
-
-namespace Analysis7.Model.Observer
+﻿namespace Analysis7.Model.Observer
 {
     public interface IListener
     {

@@ -7,7 +7,6 @@ namespace Analysis7.Model.Entities
     public class ExpertCoefficient:Subject
     {
         private int _coefficient;
-
         public int Value
         {
             get => _coefficient;

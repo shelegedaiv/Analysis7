@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
 
 namespace Analysis7.Model.Observer
 {
@@ -8,16 +7,21 @@ namespace Analysis7.Model.Observer
     public abstract class Subject
     {
         [NonSerialized]
-        private List<IListener>  _listeners=new List<IListener>();
+        private List<IListener> _listenersViewModel;
+        private List<IListener> _listeners;
 
         private void _setList()
         {
             if (_listeners is null) _listeners=new List<IListener>();
+            if (_listenersViewModel is null) _listenersViewModel=new List<IListener>();
         }
         public void Notify()
         {
             _setList();
             foreach (var listener in _listeners)     {
+                listener.Update();
+            }
+            foreach (var listener in _listenersViewModel)        {
                 listener.Update();
             }
         }
@@ -27,5 +31,11 @@ namespace Analysis7.Model.Observer
             _setList();
             _listeners.Add(listener);
         }
+
+        public void AttachListenerViewModel(IListener listener)
+        {
+            _setList();
+            _listenersViewModel.Add(listener);
+        }    
     }
 }

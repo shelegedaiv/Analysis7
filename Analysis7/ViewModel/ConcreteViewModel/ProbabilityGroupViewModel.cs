@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
 using Analysis7.Model.Entities;
@@ -11,12 +10,10 @@ namespace Analysis7.ViewModel.ConcreteViewModel
     public class ProbabilityGroupViewModel:RiskEntityViewModel, IListener
     {
         private readonly Group _modelGroup;
-        private ObservableCollection<int> _expertCoefficients;
+
         public Color GroupColor { get; }
-        private int _expertCoefficientsSum;
 
-        
-
+        private ObservableCollection<int> _expertCoefficients;
         public ObservableCollection<int> ExpertCoefficients
         {
             get => _expertCoefficients;
@@ -31,6 +28,8 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 };
             }
         }
+
+        private int _expertCoefficientsSum;
         public int ExpertCoefficientsSum
         {
             get => _expertCoefficientsSum;
@@ -42,7 +41,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private ObservableCollection<double> _expertAverageProbabilities;
-
         public ObservableCollection<double> ExpertAverageProbabilities
         {
             get => _expertAverageProbabilities;
@@ -54,7 +52,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private double _averageCoefProbability;
-
         public double AverageCoefProbability
         {
             get => _averageCoefProbability;
@@ -63,13 +60,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 _averageCoefProbability = value;
                 OnPropertyChanged(nameof(AverageCoefProbability));
             }
-        }
-        public ProbabilityGroupViewModel(Group modelGroup, Color color):base(modelGroup.Name,modelGroup.Description, modelGroup.AverageProbability.Value)
-        {
-            GroupColor = color;
-            _modelGroup = modelGroup;
-            _modelGroup.AttachListener(this);
-            Update();
         }
 
         private int _eventsNumber;
@@ -92,6 +82,14 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 _sourceNumber = value;
                 OnPropertyChanged(nameof(SourceNumber));
             }
+        }
+
+        public ProbabilityGroupViewModel(Group modelGroup, Color color):base(modelGroup.Name,modelGroup.Description, modelGroup.AverageProbability.Value)
+        {
+            GroupColor = color;
+            _modelGroup = modelGroup;
+            _modelGroup.AttachListenerViewModel(this);
+            Update();
         }
 
         public void Update()

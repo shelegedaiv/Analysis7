@@ -34,6 +34,7 @@ namespace Analysis7.Model.Entities
             {
                 ev.AttachListener(this);
             }
+            Update();
         }
 
         public void Update()

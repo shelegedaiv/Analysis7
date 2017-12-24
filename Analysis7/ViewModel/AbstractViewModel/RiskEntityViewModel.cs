@@ -19,7 +19,7 @@
         {
             Name = name;
             Description = description;
-            AverageProbability = averageProbability;//could be removed
+            AverageProbability = averageProbability;
         }
     }
 }

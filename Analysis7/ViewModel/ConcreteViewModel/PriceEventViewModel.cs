@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Analysis7.Model.Observer;
 using Analysis7.ViewModel.AbstractViewModel;
 using System.Collections.ObjectModel;
@@ -13,8 +9,10 @@ namespace Analysis7.ViewModel.ConcreteViewModel
 {
     public class PriceEventViewModel : RiskEntityViewModel, IListener
     {
-        private double _startPrice;
+        private readonly Event _modelEvent;
+        public Color GroupColor { get; set; }
 
+        private double _startPrice;
         public double StartPrice
         {
             get => _startPrice;
@@ -28,7 +26,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private double _additionalPrice;
-
         public double AdditionalPrice
         {
             get => _additionalPrice;
@@ -40,7 +37,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private double _finalPrice;
-
         public double FinalPrice
         {
             get => _finalPrice;
@@ -52,7 +48,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private bool _status;
-
         public bool Status
         {
             get => _status;
@@ -60,14 +55,12 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             {
                 _status = value;
                 _modelEvent.Status = value;
-                _modelEvent.Probability.Update();
-                _modelEvent.Price.Update();
+                _modelEvent.Update();
                 Update();
             }
         }
 
         private ObservableCollection<double> _expertProbabilities;
-
         public ObservableCollection<double> ExpertProbabilities
         {
             get => _expertProbabilities;
@@ -84,7 +77,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private ObservableCollection<double> _coefExpertProbabilities;
-
         public ObservableCollection<double> CoefExpertProbabilities
         {
             get => _coefExpertProbabilities;
@@ -101,7 +93,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private double _coefAverageProbability;
-
         public double CoefAverageProbability
         {
             get => _coefAverageProbability;
@@ -112,8 +103,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             }
         }
 
-        public Color GroupColor { get; set; }
-        private readonly Event _modelEvent;
+     
 
 
 
@@ -123,7 +113,7 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             _modelEvent = modelEvent;
             GroupColor = color;
             _status = _modelEvent.Status;
-            _modelEvent.Price.AttachListener(this);
+            _modelEvent.Price.AttachListenerViewModel(this);
             Update();
         }
 

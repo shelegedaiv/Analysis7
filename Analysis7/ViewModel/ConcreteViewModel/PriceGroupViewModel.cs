@@ -10,10 +10,10 @@ namespace Analysis7.ViewModel.ConcreteViewModel
     public class PriceGroupViewModel: RiskEntityViewModel,IListener
     {
         private readonly Group _modelGroup;
-        private ObservableCollection<int> _expertCoefficients;
-        public Color GroupColor { get; }
-        private int _expertCoefficientsSum;
 
+        public Color GroupColor { get; }
+
+        private ObservableCollection<int> _expertCoefficients;
         public ObservableCollection<int> ExpertCoefficients
         {
             get => _expertCoefficients;
@@ -28,6 +28,8 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 };
             }
         }
+
+        private int _expertCoefficientsSum;
         public int ExpertCoefficientsSum
         {
             get => _expertCoefficientsSum;
@@ -39,7 +41,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private ObservableCollection<double> _expertAverageProbabilities;
-
         public ObservableCollection<double> ExpertAverageProbabilities
         {
             get => _expertAverageProbabilities;
@@ -51,7 +52,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
         }
 
         private double _averageCoefProbability;
-
         public double AverageCoefProbability
         {
             get => _averageCoefProbability;
@@ -60,13 +60,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 _averageCoefProbability = value;
                 OnPropertyChanged(nameof(AverageCoefProbability));
             }
-        }
-        public PriceGroupViewModel(Group modelGroup, Color color):base(modelGroup.Name,modelGroup.Description, modelGroup.AverageProbability.Value)
-        {
-            GroupColor = color;
-            _modelGroup = modelGroup;
-            _modelGroup.AttachListener(this);
-            Update();
         }
 
         private double _startPrice;
@@ -103,7 +96,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             }
         }
 
-
         private int _eventsNumber;
         public int EventsNumber
         {
@@ -126,7 +118,13 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             }
         }
 
-
+        public PriceGroupViewModel(Group modelGroup, Color color):base(modelGroup.Name,modelGroup.Description, modelGroup.AverageProbability.Value)
+        {
+            GroupColor = color;
+            _modelGroup = modelGroup;
+            _modelGroup.AttachListenerViewModel(this);
+            Update();
+        }
 
         public void Update()
         {
@@ -143,6 +141,5 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             AdditionalPrice = _modelGroup.AdditionalPrice;
             FinalPrice = _modelGroup.FinalPrice;
         }
-
     }
 }

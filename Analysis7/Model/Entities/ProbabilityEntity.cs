@@ -8,17 +8,18 @@ namespace Analysis7.Model.Entities
     [Serializable]
     public class ProbabilityEntity:Subject, IListener, IAverageProbability
     {
+        protected List<double> ExpertCoefs;
+        public bool Status;
         public List<Probability> ExpertProbabilities { get; set; }
         public List<double> CoefExpertProbabilities { get; }
         public double CoefAverageProbability { get; private set; }
-        protected List<double> _expertCoefs;
         public Probability AverageProbability { get; private set; }
-        public bool Status;
+        
         public ProbabilityEntity(List<double> expertProbabilities)
         {
             AverageProbability = new Probability(0);
             ExpertProbabilities = new List<Probability>();
-            _expertCoefs = new List<double>();
+            ExpertCoefs = new List<double>();
             CoefExpertProbabilities = new List<double>();
             for (int i = 0; i < 10; i++)//set 10 probabilities for experts (default values) and coef probabilities = simple probabilities
             {
@@ -33,10 +34,9 @@ namespace Analysis7.Model.Entities
                     CoefExpertProbabilities.Add(i / 10.0);
                 }
 
-                _expertCoefs.Add(1);
+                ExpertCoefs.Add(1);
                 ExpertProbabilities[i].AttachListener(this);
             }
-            
             Update();
         }
 
@@ -44,17 +44,17 @@ namespace Analysis7.Model.Entities
         {
             for (int i = 0; i < CoefExpertProbabilities.Count; i++)
             {
-                CoefExpertProbabilities[i] = ExpertProbabilities[i].Value * _expertCoefs[i];
+                CoefExpertProbabilities[i] = ExpertProbabilities[i].Value * ExpertCoefs[i];
             }
             AverageProbability = new Probability(ExpertProbabilities.Average(e => e.Value));
-            CoefAverageProbability = CoefExpertProbabilities.Sum() / _expertCoefs.Sum();
+            CoefAverageProbability = CoefExpertProbabilities.Sum() / ExpertCoefs.Sum();
             Notify();
         }
 
 
         public void UpdateCoefficient(int number, double expertCoef)
         {
-            _expertCoefs[number] = expertCoef;
+            ExpertCoefs[number] = expertCoef;
             Update();
         }
     }

@@ -9,6 +9,10 @@ namespace Analysis7.ViewModel.ConcreteViewModel
 {
     public class EventViewModel : RiskEntityViewModel, IListener
     {
+        private readonly Event _modelEvent;
+
+        public Color GroupColor { get; set; }
+
         private ObservableCollection<double> _expertProbabilities;
         public ObservableCollection<double> ExpertProbabilities
         {
@@ -49,7 +53,6 @@ namespace Analysis7.ViewModel.ConcreteViewModel
                 OnPropertyChanged(nameof(CoefAverageProbability));
             }
         }
-        public Color GroupColor { get; set; }
 
         private bool _status;
         public bool Status
@@ -59,19 +62,16 @@ namespace Analysis7.ViewModel.ConcreteViewModel
             {
                 _status = value;
                 _modelEvent.Status = value;
-                _modelEvent.Price.Update();
-                _modelEvent.Probability.Update();
+                _modelEvent.Update();
                 Update();
-                
             }
         }
-        private readonly Event _modelEvent;
 
         public EventViewModel(Event modelEvent, Color color) : base(modelEvent.Name, modelEvent.Description, modelEvent.Probability.AverageProbability.Value)
         {
             _modelEvent = modelEvent;
             GroupColor = color;
-            _modelEvent.Probability.AttachListener(this);
+            _modelEvent.Probability.AttachListenerViewModel(this);
             Update();
         }
 
